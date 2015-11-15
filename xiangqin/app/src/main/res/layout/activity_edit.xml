@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/titlebar_layout"
+        layout="@layout/layout_titlebar" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/normal_text_shadow_style_2"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="13.0dip"
+                android:paddingRight="13.0dip"
+                android:text="@string/register_tips" />
+
+            <LinearLayout
+                android:id="@+id/top_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="@dimen/divider_view_height"
+                android:background="@drawable/leba_shape_line" />
+
+            <LinearLayout
+                android:id="@+id/bottom_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"/>
+
+            <Button
+                android:id="@+id/login_button"
+                style="@style/white_btn_text_style"
+                android:layout_width="fill_parent"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="22dp"
+                android:layout_marginRight="22dp"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/default_button_selector"
+                android:text="@string/login" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

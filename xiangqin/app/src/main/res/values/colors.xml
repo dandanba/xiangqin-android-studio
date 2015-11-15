@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="white" type="color">#fff</item>
+    <item name="black" type="color">#000</item>
+    <color name="transparent">#00000000</color>
+    <color name="common_title_bar_bg_color">#ff703987</color>
+    <color name="common_title_bg_pressed">#ff651c83</color>
+    <color name="forget_password_color_2">#ff703987</color>
+    <color name="normal_text_force_text_color">#ff828287</color>
+    <color name="normal_text_force_text_color_2">#ff9d9d9d</color>
+    <color name="normal_text_force_text_color_3">#ffa2a7ab</color>
+    <color name="term_text_text_color">#ff703987</color>
+</resources>

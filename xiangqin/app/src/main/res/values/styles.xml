@@ -1,0 +1,36 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
+
+    <style name="titlebar_text_style">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="PageLayout_paddingStyle">
+        <item name="android:paddingLeft">11dp</item>
+        <item name="android:paddingRight">11dp</item>
+    </style>
+
+    <style name="white_btn_text_style">
+        <item name="android:textSize">19sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="normal_text_shadow_style">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/normal_text_force_text_color</item>
+    </style>
+
+    <style name="normal_text_shadow_style_2">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/normal_text_force_text_color_2</item>
+    </style>
+
+    <style name="normal_text_shadow_style_3">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/normal_text_force_text_color</item>
+    </style>
+
+</resources>

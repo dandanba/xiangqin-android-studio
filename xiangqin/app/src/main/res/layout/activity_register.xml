@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/titlebar_layout"
+        layout="@layout/layout_titlebar" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/account_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/input_edittext_height"
+            android:layout_marginLeft="@dimen/login_marginLeft"
+            android:layout_marginRight="@dimen/login_marginright"
+            android:background="@color/transparent"
+            android:drawableLeft="@drawable/people_icon_normal"
+            android:drawablePadding="15dp"
+            android:hint="@string/input_phone"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:singleLine="true"
+            android:textSize="16sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1.0px"
+            android:layout_marginRight="@dimen/input_margin"
+            android:background="#ffacacac" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+
+        <EditText
+            android:id="@+id/password_edit"
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/input_edittext_height"
+            android:layout_marginLeft="@dimen/login_marginLeft"
+            android:layout_marginRight="@dimen/login_marginright"
+            android:background="@color/transparent"
+            android:drawableLeft="@drawable/password_icon_normal"
+            android:drawablePadding="15dp"
+            android:hint="@string/password_six_twenty"
+            android:inputType="textPassword"
+            android:maxLength="20"
+            android:singleLine="true"
+            android:textSize="16.0sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="1.0px"
+            android:layout_marginRight="@dimen/input_margin"
+            android:background="#ffacacac" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/normal_text_shadow_style_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/service_treaty_and_privacy_policy" />
+
+        <TextView
+            android:id="@+id/terms_textview"
+            style="@style/normal_text_shadow_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="@string/terms"
+            android:textColor="@color/term_text_text_color" />
+
+        <TextView
+            style="@style/normal_text_shadow_style_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/he" />
+
+        <TextView
+            android:id="@+id/privacy_policy_textview"
+            style="@style/normal_text_shadow_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:text="@string/privacy_policy"
+            android:textColor="@color/term_text_text_color" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_button"
+        style="@style/white_btn_text_style"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/default_button_selector"
+        android:text="@string/login" />
+
+
+</LinearLayout>
