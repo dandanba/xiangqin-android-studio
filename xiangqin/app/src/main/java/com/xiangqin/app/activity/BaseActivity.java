@@ -13,7 +13,6 @@ import de.greenrobot.event.EventBus;
 
 public class BaseActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +47,5 @@ public class BaseActivity extends AppCompatActivity {
 
     public void onEvent(Object event) {
     }
-
-
 
 }
