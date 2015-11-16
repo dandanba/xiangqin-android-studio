@@ -59,9 +59,9 @@ public class LoginActivity extends BaseActivity {
                 super.onPostExecute(result);
                 if (result != null) {
                     EventBus.getDefault().post(new ActionEvent("account"));
+                    User.putUser(LoginActivity.this, result);
                     startActivity(IntentGenerator.genSimpleActivityIntent(LoginActivity.this, MainActivity.class));
                     finish();
-                    User.putUser(LoginActivity.this, result);
                 }
             }
         }.execute(phoneNumber, password);

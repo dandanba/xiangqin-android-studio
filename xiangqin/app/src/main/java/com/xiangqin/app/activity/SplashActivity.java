@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.xiangqin.app.R;
+import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.fragment.ImagePagerFragment;
 
 import butterknife.Bind;
@@ -25,6 +26,17 @@ public class SplashActivity extends BaseActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.container, f, "imagepager");
         ft.commit();
+    }
+
+    @Override
+    public void onEvent(Object event) {
+        super.onEvent(event);
+        if (event instanceof ActionEvent) {
+            final ActionEvent action = (ActionEvent) event;
+            if ("account".equals(action.mAction)) {
+                finish();
+            }
+        }
     }
 
     @OnClick(R.id.login_button)

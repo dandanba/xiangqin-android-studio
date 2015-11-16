@@ -4,9 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.xiangqin.app.R;
+import com.xiangqin.app.model.User;
 
 
 import butterknife.Bind;
@@ -23,7 +25,12 @@ public class LogoActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    startActivity(IntentGenerator.genSimpleActivityIntent(LogoActivity.this, SplashActivity.class));
+                    final User user = User.getUser(LogoActivity.this);
+                    if (user == null) {
+                        startActivity(IntentGenerator.genSimpleActivityIntent(LogoActivity.this, SplashActivity.class));
+                    } else {
+                        startActivity(IntentGenerator.genSimpleActivityIntent(LogoActivity.this, MainActivity.class));
+                    }
                     finish();
                     break;
                 default:
@@ -37,7 +44,7 @@ public class LogoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
 
-        mHandler.sendEmptyMessageDelayed(1,3000);
+        mHandler.sendEmptyMessageDelayed(1, 3000);
     }
 
     @Override
