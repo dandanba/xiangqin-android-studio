@@ -1,18 +1,24 @@
 package com.xiangqin.app.activity;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
 import com.xiangqin.app.R;
 import com.xiangqin.app.XQApplication;
+import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 public class RegisterActivity extends BaseActivity {
     private static final String TAG = RegisterActivity.class.getSimpleName();
@@ -26,7 +32,7 @@ public class RegisterActivity extends BaseActivity {
     Button mLoginButton;
 
 
-    private User user;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +42,7 @@ public class RegisterActivity extends BaseActivity {
         mCommonTitleText.setText("注册");
         mLoginButton.setText("注册");
 
-        user = (User) XQApplication.getInstance().getMessager().get("user");
+        mUser = (User) XQApplication.getInstance().getMessager().get("user");
     }
 
     @OnClick(R.id.titlebar_left_button)
@@ -57,6 +63,34 @@ public class RegisterActivity extends BaseActivity {
     public void onLoginButtonClick(View view) {
         final String phoneNumber = mAccountEdit.getText().toString();
         final String password = mPasswordEdit.getText().toString();
+
+
+        new AsyncTask<String, Void, User>() {
+            @Override
+            protected User doInBackground(String... params) {
+                mUser.setMobilePhoneNumber(params[0]);
+                mUser.setUsername(params[0]);
+                mUser.setPassword(params[1]);
+                try {
+                    mUser.signUp();
+                    return mUser;
+                } catch (AVException e) {
+                    Log.e(TAG, "signUp", e);
+                }
+                return null;
+            }
+
+            protected void onPostExecute(User result) {
+                if (result != null) {
+                    User.putUser(RegisterActivity.this, result);
+                    EventBus.getDefault().post(new ActionEvent("account"));
+                    startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+                    finish();
+                }
+            }
+
+            ;
+        }.execute(phoneNumber, password);
 
     }
 

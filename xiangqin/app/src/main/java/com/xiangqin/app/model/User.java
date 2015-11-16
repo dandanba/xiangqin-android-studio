@@ -27,11 +27,24 @@ public class User extends AVUser {
     //{"工作地区:area", "月收入:earning", "昵称:nickname"}
 
     public String getSex() {
-        return getString("sex");
+        int sex = getInt("sex");
+        if (1 == sex) {
+            return "男";
+        } else if (sex == 2) {
+            return "女";
+        } else {
+            return "未知";
+        }
     }
 
     public void setSex(String sex) {
-        put("sex", sex);
+        if ("男".equals(sex)) {
+            put("sex", 1);
+        } else if ("女".equals(sex)) {
+            put("sex", 2);
+        } else {
+            put("sex", 0);
+        }
     }
 
     public String getBirthday() {

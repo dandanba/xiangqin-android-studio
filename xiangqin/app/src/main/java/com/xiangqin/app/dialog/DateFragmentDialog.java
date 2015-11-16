@@ -70,7 +70,7 @@ public class DateFragmentDialog extends AbSampleDialogFragment implements DatePi
         int year = calendar.get(Calendar.YEAR);
         int monthOfYear = calendar.get(Calendar.MONTH);
         int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        mDatePicker.init(year + 1, monthOfYear + 1, dayOfMonth + 1, this);
+        mDatePicker.init(year, monthOfYear, dayOfMonth, this);
 
     }
 
@@ -87,7 +87,7 @@ public class DateFragmentDialog extends AbSampleDialogFragment implements DatePi
         int monthOfYear = mDatePicker.getMonth();
         int dayOfMonth = mDatePicker.getDayOfMonth();
         if (mListener != null) {
-            mListener.onDateChanged(this, String.format("%1$d年%2$d月%3$d日", year, monthOfYear, dayOfMonth));
+            mListener.onDateChanged(this, String.format("%1$d年%2$d月%3$d日", year, monthOfYear + 1, dayOfMonth));
         }
 
     }

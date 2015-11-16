@@ -14,6 +14,7 @@ import com.xiangqin.app.XQApplication;
 import com.xiangqin.app.dialog.DateFragmentDialog;
 import com.xiangqin.app.dialog.EditFragmentDialog;
 import com.xiangqin.app.dialog.SelectFragmentDialog;
+import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
 
 import java.util.HashMap;
@@ -51,6 +52,17 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         mNextButton.setText("注册");
         initItemLayout(mTopLayout, new String[]{"性别:sex", "生日:birthday", "身高:height", "学历:education", "婚姻状况:state"});
         initItemLayout(mBottomLayout, new String[]{"工作地区:area", "月收入:earning", "昵称:nickname"});
+    }
+
+    @Override
+    public void onEvent(Object event) {
+        super.onEvent(event);
+        if (event instanceof ActionEvent) {
+            final ActionEvent action = (ActionEvent) event;
+            if ("account".equals(action.mAction)) {
+                finish();
+            }
+        }
     }
 
     private void initItemLayout(LinearLayout itemsLayout, String[] infoArray) {
