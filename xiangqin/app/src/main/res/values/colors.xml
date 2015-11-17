@@ -10,4 +10,6 @@
     <color name="normal_text_force_text_color_2">#ff9d9d9d</color>
     <color name="normal_text_force_text_color_3">#ffa2a7ab</color>
     <color name="term_text_text_color">#ff703987</color>
+    <color name="gray">#ff898989</color>
+    <color name="divider">#d9d9d9</color>
 </resources>

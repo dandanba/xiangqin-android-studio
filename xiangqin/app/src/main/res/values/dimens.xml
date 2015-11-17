@@ -10,5 +10,5 @@
     <dimen name="input_margin">10dp</dimen>
     <dimen name="line_view_height">1.0px</dimen>
     <dimen name="divider_view_height">10dp</dimen>
-
+    <dimen name="space">5dp</dimen>
 </resources>

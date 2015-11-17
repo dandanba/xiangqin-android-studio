@@ -1,6 +1,7 @@
 package com.xiangqin.app.activity;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -47,5 +48,15 @@ public class BaseActivity extends AppCompatActivity {
 
     public void onEvent(Object event) {
     }
+
+
+    public void replace(int id, Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(id, fragment)
+                .commit();
+    }
+
+
 
 }

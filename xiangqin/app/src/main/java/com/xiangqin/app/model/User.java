@@ -96,11 +96,19 @@ public class User extends AVUser {
     }
 
     public String getNickname() {
-
         return getString("nickname");
     }
 
     public void setNickname(String nickname) {
         put("nickname", nickname);
     }
+
+    public String getIcon() {
+        return getString("icon");
+    }
+
+    public void setIcon(String icon) {
+        put("icon", icon);
+    }
+
 }
