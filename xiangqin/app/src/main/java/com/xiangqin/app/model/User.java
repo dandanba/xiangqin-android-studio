@@ -1,6 +1,7 @@
 package com.xiangqin.app.model;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.avos.avoscloud.AVClassName;
 import com.avos.avoscloud.AVUser;
@@ -104,7 +105,8 @@ public class User extends AVUser {
     }
 
     public String getIcon() {
-        return getString("icon");
+        final String icon = getString("icon");
+        return TextUtils.isEmpty(icon) ? "http://sfault-avatar.b0.upaiyun.com/346/390/3463903554-1030000000193988_huge256" : icon;
     }
 
     public void setIcon(String icon) {

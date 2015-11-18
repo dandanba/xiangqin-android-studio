@@ -41,7 +41,8 @@ public class SplashActivity extends BaseActivity {
 
     @OnClick(R.id.login_button)
     public void onLoginButtonClick(View view) {
-        startActivity(IntentGenerator.genSimpleActivityIntent(this, LoginActivity.class));
+        startActivity(IntentGenerator.genSimpleActivityIntent(this, MainActivity.class));
+//        startActivity(IntentGenerator.genSimpleActivityIntent(this, LoginActivity.class));
     }
 
     @OnClick(R.id.register_button)

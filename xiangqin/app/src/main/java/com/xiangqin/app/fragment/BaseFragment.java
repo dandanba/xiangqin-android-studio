@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 
 import com.xiangqin.app.activity.BaseActivity;
 
+import de.greenrobot.event.EventBus;
+
 
 /**
  * Created by dandanba on 11/16/15.
@@ -21,6 +23,7 @@ public class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         mBaseActivity = (BaseActivity) context;
+        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -38,6 +41,15 @@ public class BaseFragment extends Fragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+    }
+
+    @Override
+    public void onDetach() {
+        EventBus.getDefault().unregister(this);
+        super.onDetach();
+    }
+
+    public void onEvent(Object event) {
     }
 
 }

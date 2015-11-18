@@ -1,10 +1,10 @@
 package com.xiangqin.app.event;
 
 public class ActionEvent {
-	public String mAction;
-	public String mData;
+    public String mAction;
+    public Object  mData;
 
-	public ActionEvent(String action) {
-		mAction = action;
-	}
+    public ActionEvent(String action) {
+        mAction = action;
+    }
 }

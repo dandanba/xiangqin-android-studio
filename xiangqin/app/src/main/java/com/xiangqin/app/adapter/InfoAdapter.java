@@ -12,25 +12,25 @@ import com.xiangqin.app.R;
 import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by dandanba on 11/16/15.
  */
-public class UserAdapter extends BaseAdapter<UserDataHolder> {
+public class InfoAdapter extends BaseAdapter<UserDataHolder> {
 
     private OnRecyclerViewItemClickListener mItemClickListener;
 
-    public UserAdapter(Context context, OnRecyclerViewItemClickListener onItemClickListener) {
+    public InfoAdapter(Context context, User user, OnRecyclerViewItemClickListener onItemClickListener) {
         super(context);
         mItemClickListener = onItemClickListener;
+        final UserDataHolder headerDataHolder = new UserDataHolder(0);
+        headerDataHolder.setUser(user);
+        mDatas.add(headerDataHolder);
     }
-
 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,9 +38,9 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
         BaseViewHolder viewHolder = null;
         switch (viewType) {
             case 0:
-                v = View.inflate(mContext, R.layout.layout_user_item, null);
+                v = View.inflate(mContext, R.layout.layout_user_header, null);
                 v.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
-                viewHolder = new UserViewHolder(v, mItemClickListener);
+                viewHolder = new HeaderViewHolder(v, mItemClickListener);
                 break;
             default:
                 break;
@@ -54,7 +54,7 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
         final int itemViewType = datHolder.getType();
         switch (itemViewType) {
             case 0:
-                UserViewHolder userViewHolder = (UserViewHolder) holder;
+                HeaderViewHolder userViewHolder = (HeaderViewHolder) holder;
                 userViewHolder.bind(mContext, datHolder, position);
                 break;
             default:
@@ -62,17 +62,23 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
         }
     }
 
-    public class UserViewHolder extends BaseViewHolder {
+    public class HeaderViewHolder extends BaseViewHolder {
         @Bind(R.id.icon)
         SimpleDraweeView mIcon;
         @Bind(R.id.title)
         TextView mTitleText;
-        @Bind(R.id.text)
-        TextView mTextText;
-        @Bind(R.id.info)
-        TextView mInfoText;
 
-        public UserViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
+
+        @OnClick(R.id.icon)
+        public void onIconClick(View view) {
+            final User user = (User) view.getTag();
+            final ActionEvent event = new ActionEvent("onIconClick");
+            event.mData = user;
+            EventBus.getDefault().post(event);
+
+        }
+
+        public HeaderViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
             super(view, onItemClickListener);
             ButterKnife.bind(this, view);
         }
@@ -80,9 +86,8 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
         public void bind(Context context, UserDataHolder datHolder, int position) {
             final User user = datHolder.getUser();
             mIcon.setImageURI(Uri.parse(user.getIcon()));
+            mIcon.setTag(user);
             mTitleText.setText(user.getUsername());
-            mTextText.setText(String.format("%1$s %2$s", user.getBirthday(), user.getArea()));
-            mInfoText.setText(String.format("%1$scm %2$s", user.getHeight(), user.getEarning()));
         }
     }
 }
