@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.viewpagerindicator.CirclePageIndicator
+    <me.relex.circleindicator.CircleIndicator
         android:id="@+id/indicator"
-        android:layout_marginBottom="110dp"
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_height="wrap_content"
-        android:layout_width="fill_parent" />
+        android:layout_marginBottom="110dp" />
 
 </FrameLayout>

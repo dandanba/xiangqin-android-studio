@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import com.viewpagerindicator.CirclePageIndicator;
+import me.relex.circleindicator.CircleIndicator;
 import com.xiangqin.app.R;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class ImagePagerFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mPager.setAdapter(mAdapter);
 
-        CirclePageIndicator indicator = (CirclePageIndicator) view.findViewById(R.id.indicator);
+        CircleIndicator indicator = (CircleIndicator) view.findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
     }
 

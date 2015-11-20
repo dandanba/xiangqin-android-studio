@@ -46,6 +46,8 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:23.1.1'
     compile 'com.facebook.fresco:fresco:0.8.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile(name:'viewpagerindicator', ext:'aar')
+    compile 'com.timehop.fragmentswitcher:library:1.1.2'
+    compile 'me.relex:circleindicator:1.1.5@aar'
+    compile 'com.timehop.fragmentswitcher:library:1.1.2'
     compile(name:'multi-image-selector', ext:'aar')
 }

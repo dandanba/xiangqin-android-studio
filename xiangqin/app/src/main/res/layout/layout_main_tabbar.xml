@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical" >
+	<include layout="@layout/layout_line_horizontal" />
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"
+		android:background="#ebebeb"
+		android:orientation="horizontal"
+		android:paddingBottom="8dp"
+		android:paddingTop="8dp" >
+		<TextView
+			android:id="@+id/tab_1"
+			android:layout_width="1dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawablePadding="5dp"
+			android:drawableTop="@drawable/tab_icon_1_default"
+			android:gravity="center"
+			android:text="@string/tab_text_1"
+			android:textColor="#969696" />
+		<TextView
+			android:id="@+id/tab_2"
+			android:layout_width="1dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawablePadding="5dp"
+			android:drawableTop="@drawable/tab_icon_2_default"
+			android:gravity="center"
+			android:text="@string/tab_text_2"
+			android:textColor="#969696" />
+		<TextView
+			android:id="@+id/tab_3"
+			android:layout_width="1dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawablePadding="5dp"
+			android:drawableTop="@drawable/tab_icon_3_default"
+			android:gravity="center"
+			android:text="@string/tab_text_3"
+			android:textColor="#969696" />
+		<TextView
+			android:id="@+id/tab_4"
+			android:layout_width="1dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawablePadding="5dp"
+			android:drawableTop="@drawable/tab_icon_4_default"
+			android:gravity="center"
+			android:text="@string/tab_text_4"
+			android:textColor="#969696" />
+		<TextView
+			android:id="@+id/tab_5"
+			android:layout_width="1dp"
+			android:layout_height="wrap_content"
+			android:layout_weight="1"
+			android:drawablePadding="5dp"
+			android:drawableTop="@drawable/tab_icon_5_default"
+			android:gravity="center"
+			android:text="@string/tab_text_5"
+			android:textColor="#969696" />
+	</LinearLayout>
+</LinearLayout>
