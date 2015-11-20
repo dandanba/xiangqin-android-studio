@@ -49,12 +49,15 @@ public class SearchFragment extends BaseFragment implements OnRecyclerViewItemCl
     }
 
     UserAdapter mAdapter;
+    User mUser;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         mAdapter = new UserAdapter(context, this);
         mUserQuery = AVQuery.getQuery(User.class);
+        mUser = User.getUser(mBaseActivity);
+        mUserQuery.whereNotEqualTo("sex", mUser.getSexInt());
     }
 
     @Nullable
@@ -75,7 +78,6 @@ public class SearchFragment extends BaseFragment implements OnRecyclerViewItemCl
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setAdapter(mAdapter);
-        mUserQuery.whereEqualTo("sex", 2);
         mUserQuery.findInBackground(new FindCallback<User>() {
             @Override
             public void done(List<User> list, AVException e) {
@@ -106,16 +108,8 @@ public class SearchFragment extends BaseFragment implements OnRecyclerViewItemCl
     @Override
     public void onItemClick(View view, int position) {
         final UserDataHolder data = mAdapter.mDatas.get(position);
-
         final User user = data.getUser();
-        user.setIcon("http://ac-svu6vore.clouddn.com/sboEnFELsrDdSUMAJyZiRZPmV69J8Q1nv708rTID.png");
-        user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(AVException e) {
-                ToastUtils.showToast(mBaseActivity, e == null ? "okkk" : e.toString());
-            }
-        });
-//        XQApplication.getInstance().getMessager().put("user", data.getUser());
-        //startActivity(IntentGenerator.genSimpleActivityIntent(mBaseActivity, InfoActivity.class));
+        XQApplication.getInstance().getMessager().put("user", user);
+        startActivity(IntentGenerator.genSimpleActivityIntent(mBaseActivity, InfoActivity.class));
     }
 }

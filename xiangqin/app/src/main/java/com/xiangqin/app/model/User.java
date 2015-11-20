@@ -38,6 +38,10 @@ public class User extends AVUser {
         }
     }
 
+    public int getSexInt() {
+        return getInt("sex");
+    }
+
     public void setSex(String sex) {
         if ("男".equals(sex)) {
             put("sex", 1);

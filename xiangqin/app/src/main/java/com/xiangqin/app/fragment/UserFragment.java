@@ -101,7 +101,14 @@ public class UserFragment extends BaseFragment implements OnRecyclerViewItemClic
                         if (e == null) {
                             final String fileUrl = avFile.getUrl();
                             mUser.setIcon(fileUrl);
-                            mUser.saveInBackground();
+                            mUser.saveInBackground(new SaveCallback() {
+                                @Override
+                                public void done(AVException e) {
+                                    if(e==null){
+                                        mBaseActivity.finish();
+                                    }
+                                }
+                            });
                             Log.i(TAG, fileUrl);
                         }
                     }
