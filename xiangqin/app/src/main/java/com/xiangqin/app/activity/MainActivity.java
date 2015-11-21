@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.SaveCallback;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.Poi;
@@ -19,6 +21,7 @@ import com.xiangqin.app.fragment.MessageFragment;
 import com.xiangqin.app.fragment.MyFragment;
 import com.xiangqin.app.fragment.NearbyFragment;
 import com.xiangqin.app.fragment.SearchFragment;
+import com.xiangqin.app.model.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +30,7 @@ import butterknife.Bind;
 import me.tabak.fragmentswitcher.FragmentStateArrayPagerAdapter;
 import me.tabak.fragmentswitcher.FragmentSwitcher;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity implements View.OnClickListener {
     private static final String TAG = "XQ";
     private LocationService mLocationService;
     // ------ bind ------
@@ -66,7 +69,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
      */
     @Override
     protected void onStop() {
-       
+
         mLocationService.unregisterListener(mListener); //注销掉监听
         mLocationService.stop(); //停止定位服务
         super.onStop();
@@ -74,7 +77,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     protected void onStart() {
-       
+
         super.onStart();
         //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
         mLocationService.registerListener(mListener);
@@ -94,7 +97,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         @Override
         public void onReceiveLocation(BDLocation location) {
             if (null != location && location.getLocType() != BDLocation.TypeServerError) {
+                User user = User.getCurrentUser(User.class);
 
+                user.setLongitude(location.getLongitude());
+                user.setLatitude(location.getLatitude());
+                user.setArea(location.getCity());
+                user.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e == null) {
+                            mLocationService.unregisterListener(mListener); //注销掉监听
+                            mLocationService.stop(); //停止定位服务
+                        }
+                    }
+                });
+                logLocation(location);
             }
         }
 
@@ -172,7 +189,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         }
 
     };
-
 
 
     public void initData() {

@@ -117,4 +117,19 @@ public class User extends AVUser {
         put("icon", icon);
     }
 
+    public double getLongitude() {
+        return getDouble("longitude");
+    }
+
+    public void setLongitude(double longitude) {
+        put("longitude", longitude);
+    }
+
+    public double getLatitude() {
+        return getDouble("latitude");
+    }
+
+    public void setLatitude(double latitude) {
+        put("latitude", latitude);
+    }
 }
