@@ -51,7 +51,7 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         mCommonTitleText.setText("个人信息");
         mNextButton.setText("注册");
         initItemLayout(mTopLayout, new String[]{"性别:sex", "生日:birthday", "身高:height", "学历:education", "婚姻状况:state"});
-        initItemLayout(mBottomLayout, new String[]{"工作地区:area", "月收入:earning", "昵称:nickname"});
+        initItemLayout(mBottomLayout, new String[]{"月收入:earning", "昵称:nickname"});
     }
 
     @Override
@@ -110,7 +110,6 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         final String education = getText("education");
         final String height = getText("height");
         final String state = getText("state");
-
 
         final User user = new User();
 
