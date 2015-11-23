@@ -8,6 +8,7 @@ import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.baidu.location.service.LocationService;
 import com.baidu.location.service.WriteLog;
+import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.xiangqin.app.message.Messager;
 import com.xiangqin.app.model.User;
@@ -32,6 +33,7 @@ public class XQApplication extends Application {
         locationService = new LocationService(getApplicationContext());
         mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         WriteLog.getInstance().init(); // 初始化日志
+        SDKInitializer.initialize(getApplicationContext());
 
         Fresco.initialize(this);
         AVObject.registerSubclass(User.class);
