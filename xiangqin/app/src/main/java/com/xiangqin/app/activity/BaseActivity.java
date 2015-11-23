@@ -4,9 +4,17 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.AVPush;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.SendCallback;
 import com.umeng.analytics.MobclickAgent;
 import com.xiangqin.app.R;
+import com.xiangqin.app.model.User;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,7 +64,6 @@ public class BaseActivity extends AppCompatActivity {
                 .replace(id, fragment)
                 .commit();
     }
-
 
 
 }

@@ -1,10 +1,18 @@
 package com.xiangqin.app.model;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.widget.Toast;
 
+import com.alibaba.fastjson.JSONObject;
 import com.avos.avoscloud.AVClassName;
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.AVPush;
+import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
+import com.avos.avoscloud.SendCallback;
 import com.xiangqin.app.utils.PreferencesUtils;
 
 @AVClassName("User")
@@ -131,5 +139,37 @@ public class User extends AVUser {
 
     public void setLatitude(double latitude) {
         put("latitude", latitude);
+    }
+
+    public void setInstallationId(String installationId) {
+        put("installationId", installationId);
+    }
+
+    public String getInstallationId() {
+        return getString("installationId");
+    }
+
+    public void sayHello(Context context, User sender) {
+        AVPush push = new AVPush();
+        final Activity activity = (Activity) context;
+        final String installationId = getInstallationId();
+        AVQuery<AVInstallation> query = AVInstallation.getQuery();
+        query.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
+        push.setQuery(query);
+        push.setChannel(installationId);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("action", "com.xiangqin.action.sayHello");
+        jsonObject.put("objectId", sender.getObjectId());
+        jsonObject.put("alert", sender.getNickname() + "向您打招呼了。");
+
+        push.setData(jsonObject);
+        push.setPushToAndroid(true);
+        push.sendInBackground(new SendCallback() {
+            @Override
+            public void done(AVException e) {
+                Toast.makeText(activity, "send successfully", Toast.LENGTH_SHORT);
+            }
+        });
     }
 }

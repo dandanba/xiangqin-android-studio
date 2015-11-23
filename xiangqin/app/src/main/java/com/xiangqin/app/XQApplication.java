@@ -38,6 +38,11 @@ public class XQApplication extends Application {
         Fresco.initialize(this);
         AVObject.registerSubclass(User.class);
         AVOSCloud.initialize(this, Constants.AVOS_APP_ID, Constants.AVOS_APP_KEY);
+
+        // 启用崩溃错误统计
+//        AVAnalytics.enableCrashReport(this.getApplicationContext(), true);
+        AVOSCloud.setLastModifyEnabled(true);
+        AVOSCloud.setDebugLogEnabled(true);
         sInstance = this;
     }
 

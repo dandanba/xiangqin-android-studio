@@ -1,5 +1,6 @@
 package com.xiangqin.app.activity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -54,44 +57,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private final List<Fragment> mFragments = new ArrayList<Fragment>();
     private int mClickedTabId = R.id.tab_1;
     private FragmentStateArrayPagerAdapter mFragmentAdapter;
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        initData();
-        initView();
-    }
-
-
-    /***
-     * Stop location service
-     */
-    @Override
-    protected void onStop() {
-
-        mLocationService.unregisterListener(mListener); //注销掉监听
-        mLocationService.stop(); //停止定位服务
-        super.onStop();
-    }
-
-    @Override
-    protected void onStart() {
-
-        super.onStart();
-        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
-        mLocationService.registerListener(mListener);
-        //注册监听
-        int type = getIntent().getIntExtra("from", 0);
-        if (type == 0) {
-            mLocationService.setLocationOption(mLocationService.getDefaultLocationClientOption());
-        } else if (type == 1) {
-            mLocationService.setLocationOption(mLocationService.getOption());
-        }
-        mLocationService.start();// 定位SDK
-    }
-
-
     private BDLocationListener mListener = new BDLocationListener() {
 
         @Override
@@ -190,6 +155,84 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     };
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        initPush();
+        initData();
+        initView();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        processExtraData();
+    }
+
+    private void processExtraData() {
+        // TODO
+    }
+
+    /***
+     * Stop location service
+     */
+    @Override
+    protected void onStop() {
+        mLocationService.unregisterListener(mListener); //注销掉监听
+        mLocationService.stop(); //停止定位服务
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //获取locationservice实例，建议应用中只初始化1个location实例，然后使用，可以参考其他示例的activity，都是通过此种方式获取locationservice实例的
+        mLocationService.registerListener(mListener);
+        //注册监听
+        int type = getIntent().getIntExtra("from", 0);
+        if (type == 0) {
+            mLocationService.setLocationOption(mLocationService.getDefaultLocationClientOption());
+        } else if (type == 1) {
+            mLocationService.setLocationOption(mLocationService.getOption());
+        }
+        mLocationService.start();// 定位SDK
+    }
+
+
+    private void initPush() {
+        // 设置默认打开的 Activity
+        PushService.setDefaultPushCallback(this, MainActivity.class);
+        final String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+        // 订阅频道，当该频道消息到来的时候，打开对应的 Activity
+        PushService.subscribe(this, "public", MainActivity.class);
+        PushService.subscribe(this, "private", MainActivity.class);
+        PushService.subscribe(this, "protected", MainActivity.class);
+        PushService.subscribe(this, installationId, MainActivity.class);
+        // 保存 installation 到服务器
+        AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e != null) {
+                    AVInstallation.getCurrentInstallation().saveInBackground();
+                }
+            }
+        });
+
+        final User user = User.getCurrentUser(User.class);
+        user.setInstallationId(installationId);
+        user.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(AVException e) {
+                if (e != null) {
+                    user.saveInBackground();
+                }
+            }
+        });
+
+    }
 
     public void initData() {
         // -----------location config ------------

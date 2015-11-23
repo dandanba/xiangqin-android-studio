@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
@@ -71,6 +72,15 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
         TextView mTextText;
         @Bind(R.id.info)
         TextView mInfoText;
+        @Bind(R.id.say_hello_button)
+        View mSayHelloButton;
+
+
+        @OnClick(R.id.say_hello_button)
+        public void onSayHelloButtonClick(View view) {
+            final User user = (User) view.getTag();
+            user.sayHello(mContext, User.getCurrentUser(User.class));
+        }
 
         public UserViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
             super(view, onItemClickListener);
@@ -83,6 +93,7 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
             mTitleText.setText(user.getUsername());
             mTextText.setText(String.format("%1$s %2$s", user.getBirthday(), user.getArea()));
             mInfoText.setText(String.format("%1$scm %2$s", user.getHeight(), user.getEarning()));
+            mSayHelloButton.setTag(user);
         }
     }
 }
