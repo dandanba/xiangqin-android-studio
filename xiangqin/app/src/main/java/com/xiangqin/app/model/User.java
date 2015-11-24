@@ -14,6 +14,7 @@ import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
 import com.avos.avoscloud.SendCallback;
 import com.xiangqin.app.utils.PreferencesUtils;
+import com.xiangqin.app.utils.ToastUtils;
 
 @AVClassName("User")
 public class User extends AVUser {
@@ -149,27 +150,14 @@ public class User extends AVUser {
         return getString("installationId");
     }
 
-    public void sayHello(Context context, User sender) {
+    public void sayHello(User sender) {
         AVPush push = new AVPush();
-        final Activity activity = (Activity) context;
-        final String installationId = getInstallationId();
+        push.setChannel("public");
+        push.setMessage(sender.getNickname() + "向您打招呼了。");
         AVQuery<AVInstallation> query = AVInstallation.getQuery();
-        query.whereEqualTo("installationId", AVInstallation.getCurrentInstallation().getInstallationId());
+        query.whereEqualTo("installationId", getInstallationId());
         push.setQuery(query);
-        push.setChannel(installationId);
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("action", "com.xiangqin.action.sayHello");
-        jsonObject.put("objectId", sender.getObjectId());
-        jsonObject.put("alert", sender.getNickname() + "向您打招呼了。");
-
-        push.setData(jsonObject);
         push.setPushToAndroid(true);
-        push.sendInBackground(new SendCallback() {
-            @Override
-            public void done(AVException e) {
-                Toast.makeText(activity, "send successfully", Toast.LENGTH_SHORT);
-            }
-        });
+        push.sendInBackground();
     }
 }

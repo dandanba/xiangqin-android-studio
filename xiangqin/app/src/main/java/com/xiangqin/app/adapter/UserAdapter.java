@@ -79,7 +79,7 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
         @OnClick(R.id.say_hello_button)
         public void onSayHelloButtonClick(View view) {
             final User user = (User) view.getTag();
-            user.sayHello(mContext, User.getCurrentUser(User.class));
+            user.sayHello(User.getCurrentUser(User.class));
         }
 
         public UserViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {

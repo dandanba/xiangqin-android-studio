@@ -205,32 +205,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     private void initPush() {
         // 设置默认打开的 Activity
         PushService.setDefaultPushCallback(this, MainActivity.class);
-        final String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
         // 订阅频道，当该频道消息到来的时候，打开对应的 Activity
         PushService.subscribe(this, "public", MainActivity.class);
         PushService.subscribe(this, "private", MainActivity.class);
         PushService.subscribe(this, "protected", MainActivity.class);
-        PushService.subscribe(this, installationId, MainActivity.class);
         // 保存 installation 到服务器
         AVInstallation.getCurrentInstallation().saveInBackground(new SaveCallback() {
             @Override
             public void done(AVException e) {
-                if (e != null) {
-                    AVInstallation.getCurrentInstallation().saveInBackground();
-                }
-            }
-        });
-
-        final User user = User.getCurrentUser(User.class);
-        user.setInstallationId(installationId);
-        user.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(AVException e) {
-                if (e != null) {
+                if (e == null) {
+                    final String installationId = AVInstallation.getCurrentInstallation().getInstallationId();
+                    final User user = User.getCurrentUser(User.class);
+                    user.setInstallationId(installationId);
                     user.saveInBackground();
                 }
             }
         });
+
 
     }
 
