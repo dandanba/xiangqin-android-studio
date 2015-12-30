@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import me.tabak.fragmentswitcher.FragmentStateArrayPagerAdapter;
 import me.tabak.fragmentswitcher.FragmentSwitcher;
 
@@ -41,6 +43,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     TextView mCommonTitleText;
     @Bind(R.id.titlebar_left_button)
     ImageView mLeftButton;
+    @Bind(R.id.titlebar_right_button)
+    ViewGroup mRightButton;
     @Bind(R.id.content_layout)
     FragmentSwitcher mFragmentSwitcher;
     @Bind(R.id.tab_1)
@@ -202,6 +206,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
 
+    @OnClick(R.id.titlebar_right_button)
+    public void onRightButtonClick(View view) {
+        startActivity(IntentGenerator.genSimpleActivityIntent(this, SettingsActivity.class));
+    }
+
+
     private void initPush() {
         // 设置默认打开的 Activity
         PushService.setDefaultPushCallback(this, MainActivity.class);
@@ -221,8 +231,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             }
         });
-
-
     }
 
     public void initData() {
@@ -249,6 +257,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         mTabButton5.setOnClickListener(this);
         mLeftButton.setVisibility(View.INVISIBLE);
         mCommonTitleText.setText("缘分");
+        mRightButton.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -282,26 +291,31 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             mClickedTabId = id;
             switch (id) {
                 case R.id.tab_1:
+                    mRightButton.setVisibility(View.INVISIBLE);
                     mCommonTitleText.setText("缘分");
                     button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab_icon_1_foucsed, 0, 0);
                     mFragmentSwitcher.setCurrentItem(0);
                     break;
                 case R.id.tab_2:
+                    mRightButton.setVisibility(View.INVISIBLE);
                     mCommonTitleText.setText("搜索");
                     button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab_icon_2_foucsed, 0, 0);
                     mFragmentSwitcher.setCurrentItem(1);
                     break;
                 case R.id.tab_3:
+                    mRightButton.setVisibility(View.INVISIBLE);
                     mCommonTitleText.setText("信箱");
                     button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab_icon_3_foucsed, 0, 0);
                     mFragmentSwitcher.setCurrentItem(2);
                     break;
                 case R.id.tab_4:
+                    mRightButton.setVisibility(View.INVISIBLE);
                     mCommonTitleText.setText("附近");
                     button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab_icon_4_foucsed, 0, 0);
                     mFragmentSwitcher.setCurrentItem(3);
                     break;
                 case R.id.tab_5:
+                    mRightButton.setVisibility(View.VISIBLE);
                     mCommonTitleText.setText("我");
                     button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab_icon_5_foucsed, 0, 0);
                     mFragmentSwitcher.setCurrentItem(4);

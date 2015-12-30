@@ -3,7 +3,7 @@
     <item name="white" type="color">#fff</item>
     <item name="black" type="color">#000</item>
     <color name="transparent">#00000000</color>
-    <color name="common_title_bar_bg_color">#ff703987</color>
+    <color name="common_title_bar_bg_color">#000</color>
     <color name="common_title_bg_pressed">#ff651c83</color>
     <color name="forget_password_color_2">#ff703987</color>
     <color name="normal_text_force_text_color">#ff828287</color>

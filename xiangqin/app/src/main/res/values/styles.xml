@@ -7,6 +7,10 @@
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/white</item>
     </style>
+    <style name="titlebar_button_style">
+        <item name="android:textSize">17sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 
     <style name="PageLayout_paddingStyle">
         <item name="android:paddingLeft">11dp</item>
