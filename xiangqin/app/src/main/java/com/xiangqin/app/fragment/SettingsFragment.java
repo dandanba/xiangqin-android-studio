@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 
 import com.xiangqin.app.R;
 import com.xiangqin.app.adapter.ItemDivider;
-import com.xiangqin.app.adapter.OnRecyclerViewItemClickListener;
 import com.xiangqin.app.adapter.SettingsAdapter;
 
 import butterknife.Bind;
@@ -20,7 +19,7 @@ import butterknife.ButterKnife;
 /**
  * Created by dandanba on 11/16/15.
  */
-public class SettingsFragment extends BaseFragment implements OnRecyclerViewItemClickListener {
+public class SettingsFragment extends BaseFragment {
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
@@ -36,7 +35,7 @@ public class SettingsFragment extends BaseFragment implements OnRecyclerViewItem
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mAdapter = new SettingsAdapter(context, this);
+        mAdapter = new SettingsAdapter(context, null);
     }
 
     @Nullable
@@ -65,8 +64,4 @@ public class SettingsFragment extends BaseFragment implements OnRecyclerViewItem
         ButterKnife.unbind(this);
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-
-    }
 }

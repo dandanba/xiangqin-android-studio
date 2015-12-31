@@ -6,16 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.xiangqin.app.R;
 import com.xiangqin.app.utils.DisplayUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dandanba on 11/16/15.
  */
-public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> {
+public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> implements OnRecyclerViewItemClickListener {
 
     private OnRecyclerViewItemClickListener mItemClickListener;
 
@@ -76,15 +78,13 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> {
 
         mDatas.add(itemDataHolder);
 
-        mDatas.add(new SettingsDataHolder(1));
-
-        itemDataHolder = new SettingsDataHolder(0);
+        itemDataHolder = new SettingsDataHolder(2);
         itemDataHolder.setTitle("退出登录");
         itemDataHolder.setText("");
 
         mDatas.add(itemDataHolder);
 
-        mItemClickListener = onItemClickListener;
+        mItemClickListener = this;
     }
 
 
@@ -103,6 +103,11 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> {
                 v.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, DisplayUtils.dpToPxInt(mContext, 20)));
                 viewHolder = new DividerViewHolder(v, mItemClickListener);
                 break;
+            case 2:
+                v = View.inflate(mContext, R.layout.layout_button, null);
+                v.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
+                viewHolder = new ButtonViewHolder(v, mItemClickListener);
+                break;
             default:
                 break;
         }
@@ -119,10 +124,26 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> {
                 settingsViewHolder.bind(mContext, dataHolder, position);
                 break;
             case 1:
-                DividerViewHolder userViewHolder = (DividerViewHolder) holder;
-                userViewHolder.bind(mContext, dataHolder, position);
+                DividerViewHolder dividerViewHolder = (DividerViewHolder) holder;
+                dividerViewHolder.bind(mContext, dataHolder, position);
+                break;
+            case 2:
+                ButtonViewHolder buttonViewHolder = (ButtonViewHolder) holder;
+                buttonViewHolder.bind(mContext, dataHolder, position);
                 break;
             default:
+                break;
+        }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+        final String title =
+                mDatas.get(position).getTitle();
+        switch (title) {
+            case "意见反馈":
+                FeedbackAgent agent = new FeedbackAgent(mContext);
+                agent.startDefaultThreadActivity();
                 break;
         }
     }
@@ -156,4 +177,27 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> {
         }
     }
 
+    public class ButtonViewHolder extends BaseViewHolder {
+        @Bind(R.id.button)
+        TextView mTitleText;
+
+
+        @OnClick(R.id.button)
+        public void onButtonClick(View view) {
+            final String title = (String) view.getTag();
+            if (title.equals("退出登录")) {
+
+            }
+        }
+
+        public ButtonViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
+            super(view, onItemClickListener);
+            ButterKnife.bind(this, view);
+        }
+
+        public void bind(Context context, SettingsDataHolder datHolder, int position) {
+            mTitleText.setText(datHolder.getTitle());
+            mTitleText.setTag(datHolder.getTitle());
+        }
+    }
 }

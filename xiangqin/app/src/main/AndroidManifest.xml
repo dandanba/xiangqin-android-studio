@@ -87,6 +87,9 @@
             android:name=".activity.InfoActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.avos.avoscloud.feedback.ThreadActivity" >
+        </activity>
         <!-- multi selector -->
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
