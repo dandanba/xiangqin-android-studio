@@ -42,14 +42,19 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
             "170", "171", "172", "173", "174", "175", "176", "177", "178", "179"};
 
     private final HashMap<String, View> mLayouts = new HashMap<>();
+    private boolean mUpdateUser;
+    private User mUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
+
+        mUpdateUser = getIntent().getBooleanExtra("update_user", false);
+        mUser = mUpdateUser ? User.getUser(this) : new User();
         ButterKnife.bind(this);
-        mCommonTitleText.setText("个人信息");
-        mNextButton.setText("注册");
+        mCommonTitleText.setText(mUpdateUser ? "修改个人信息" : "个人信息");
+        mNextButton.setText(mUpdateUser ? "修改" : "注册");
         initItemLayout(mTopLayout, new String[]{"性别:sex", "生日:birthday", "身高:height", "学历:education", "婚姻状况:state"});
         initItemLayout(mBottomLayout, new String[]{"月收入:earning", "昵称:nickname"});
     }
@@ -71,10 +76,11 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         View itemLayout;
         InfoItem item;
         String[] sa;
-
+        String text;
         for (int i = 0; i < size; i++) {
             sa = infoArray[i].split(":");
-            item = new InfoItem(sa[0], "未填写", sa[1]);
+            text = mUpdateUser ? getTextByUser(sa[1]) : "未填写";
+            item = new InfoItem(sa[0], text, sa[1]);
             itemLayout = inflater.inflate(R.layout.layout_user_edit_item, null);
             itemLayout.setTag(item);
             itemLayout.setOnClickListener(this);
@@ -102,7 +108,6 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
 
     @OnClick(R.id.login_button)
     public void onLoginButtonClcik(View view) {
-
         final String nickname = getText("nickname");
         final String birthday = getText("birthday");
         final String sex = getText("sex");
@@ -110,8 +115,7 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         final String education = getText("education");
         final String height = getText("height");
         final String state = getText("state");
-
-        final User user = new User();
+        final User user = mUser;
 
         user.setNickname(nickname);
         user.setBirthday(birthday);
@@ -124,6 +128,28 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         XQApplication.getInstance().getMessager().put("user", user);
         startActivity(IntentGenerator.genSimpleActivityIntent(this, RegisterActivity.class));
     }
+
+    private String getTextByUser(String tag) {
+        switch (tag) {
+            case "nickname":
+                return mUser.getNickname();
+            case "birthday":
+                return mUser.getBirthday();
+            case "sex":
+                return mUser.getSex();
+            case "earning":
+                return mUser.getEarning();
+            case "education":
+                return mUser.getEducation();
+            case "height":
+                return mUser.getHeight();
+            case "state":
+                return mUser.getState();
+            default:
+                return "";
+        }
+    }
+
 
     private String getText(String tag) {
         InfoItem item = (InfoItem) mLayouts.get(tag).getTag();

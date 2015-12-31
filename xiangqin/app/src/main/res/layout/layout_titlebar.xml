@@ -45,7 +45,8 @@
         android:background="@drawable/common_title_button_selector"
         android:minWidth="55dp"
         android:scaleType="center"
-        android:src="@drawable/titlebar_back_normal">
+        android:src="@drawable/titlebar_back_normal"
+        android:visibility="invisible">
 
         <TextView
             style="@style/titlebar_button_style"

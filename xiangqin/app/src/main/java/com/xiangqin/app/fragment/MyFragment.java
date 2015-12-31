@@ -9,22 +9,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.avos.avoscloud.AVException;
-import com.avos.avoscloud.AVQuery;
-import com.avos.avoscloud.FindCallback;
 import com.xiangqin.app.R;
-import com.xiangqin.app.XQApplication;
-import com.xiangqin.app.activity.InfoActivity;
-import com.xiangqin.app.activity.IntentGenerator;
 import com.xiangqin.app.adapter.ItemDivider;
+import com.xiangqin.app.adapter.MyAdapter;
 import com.xiangqin.app.adapter.OnRecyclerViewItemClickListener;
-import com.xiangqin.app.adapter.UserAdapter;
-import com.xiangqin.app.adapter.UserDataHolder;
 import com.xiangqin.app.model.User;
-import com.xiangqin.app.utils.ToastUtils;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -35,7 +24,6 @@ import butterknife.ButterKnife;
 public class MyFragment extends BaseFragment implements OnRecyclerViewItemClickListener {
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    AVQuery<User> mUserQuery;
 
     public static MyFragment newInstance() {
         MyFragment fragment = new MyFragment();
@@ -44,16 +32,14 @@ public class MyFragment extends BaseFragment implements OnRecyclerViewItemClickL
         return fragment;
     }
 
-    UserAdapter mAdapter;
+    MyAdapter mAdapter;
     User mUser;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mAdapter = new UserAdapter(context, this);
-        mUserQuery = AVQuery.getQuery(User.class);
         mUser = User.getUser(mBaseActivity);
-        mUserQuery.whereNotEqualTo("sex", mUser.getSexInt());
+        mAdapter = new MyAdapter(context, mUser);
     }
 
     @Nullable
@@ -74,25 +60,6 @@ public class MyFragment extends BaseFragment implements OnRecyclerViewItemClickL
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setAdapter(mAdapter);
-        mUserQuery.findInBackground(new FindCallback<User>() {
-            @Override
-            public void done(List<User> list, AVException e) {
-                if (e != null) {
-                    ToastUtils.showToast(mBaseActivity, e.toString());
-                    return;
-                }
-
-                final List<UserDataHolder> datas = new ArrayList<UserDataHolder>();
-                final int size = list.size();
-                UserDataHolder data;
-                for (int i = 0; i < size; i++) {
-                    data = new UserDataHolder(0);
-                    data.setUser(list.get(i));
-                    datas.add(data);
-                }
-                mAdapter.addAll(datas);
-            }
-        });
     }
 
     @Override
@@ -103,9 +70,6 @@ public class MyFragment extends BaseFragment implements OnRecyclerViewItemClickL
 
     @Override
     public void onItemClick(View view, int position) {
-        final UserDataHolder data = mAdapter.mDatas.get(position);
-        final User user = data.getUser();
-        XQApplication.getInstance().getMessager().put("user", user);
-        startActivity(IntentGenerator.genSimpleActivityIntent(mBaseActivity, InfoActivity.class));
+
     }
 }

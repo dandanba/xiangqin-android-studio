@@ -102,10 +102,6 @@
             android:name="UMENG_CHANNEL"
             android:value="Umeng" />
 
-        <receiver
-            android:name=".push.PushReceiver"
-            android:enabled="true"
-            android:exported="true"></receiver>
     </application>
 
 </manifest>

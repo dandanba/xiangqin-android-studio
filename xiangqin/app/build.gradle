@@ -35,6 +35,9 @@ android {
         exclude 'META-INF/LGPL2.1'
     }
 
+    lintOptions {
+        abortOnError false
+    }
 }
 
 repositories {
@@ -54,9 +57,5 @@ dependencies {
     compile 'com.timehop.fragmentswitcher:library:1.1.2'
     compile 'me.relex:circleindicator:1.1.5@aar'
     compile 'com.timehop.fragmentswitcher:library:1.1.2'
-    compile 'cn.leancloud.android:avoscloud-sdk:v3.+'
-    compile 'cn.leancloud.android:avoscloud-push:v3.+@aar'
-    compile 'cn.leancloud.android:Java-WebSocket:1.3.1-leancloud'
-    compile 'cn.leancloud.android:avoscloud-feedback:v3.+@aar'
     compile(name: 'multi-image-selector', ext: 'aar')
 }
