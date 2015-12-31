@@ -10,6 +10,7 @@ public class UserDataHolder extends BaseDataHolder {
         super(type);
     }
 
+    private String tag;
     private User user;
 
     public User getUser() {
@@ -18,5 +19,13 @@ public class UserDataHolder extends BaseDataHolder {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getTag() {
+        return tag;
+    }
+
+    public void setTag(String tag) {
+        this.tag = tag;
     }
 }

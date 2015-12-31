@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xiangqin.app.R;
 import com.xiangqin.app.activity.IntentGenerator;
@@ -23,7 +22,7 @@ import butterknife.OnClick;
 /**
  * Created by dandanba on 11/16/15.
  */
-public class MyAdapter extends BaseAdapter<SettingsDataHolder> implements OnRecyclerViewItemClickListener {
+public class MyAdapter extends BaseAdapter<MyDataHolder> implements OnRecyclerViewItemClickListener {
 
     private OnRecyclerViewItemClickListener mItemClickListener;
 
@@ -31,28 +30,28 @@ public class MyAdapter extends BaseAdapter<SettingsDataHolder> implements OnRecy
 
     public MyAdapter(Context context, User user) {
         super(context);
-        SettingsDataHolder itemDataHolder;
+        MyDataHolder itemDataHolder;
 
-        mDatas.add(new SettingsDataHolder(1));
+        mDatas.add(new MyDataHolder(1));
 
-        itemDataHolder = new SettingsDataHolder(2);
+        itemDataHolder = new MyDataHolder(2);
         mDatas.add(itemDataHolder);
 
-        mDatas.add(new SettingsDataHolder(1));
+        mDatas.add(new MyDataHolder(1));
 
-        itemDataHolder = new SettingsDataHolder(0);
+        itemDataHolder = new MyDataHolder(0);
         itemDataHolder.setTitle("新手礼包");
         itemDataHolder.setText("");
 
         mDatas.add(itemDataHolder);
 
-        itemDataHolder = new SettingsDataHolder(0);
+        itemDataHolder = new MyDataHolder(0);
         itemDataHolder.setTitle("有奖励未领取");
         itemDataHolder.setText("");
 
         mDatas.add(itemDataHolder);
 
-        itemDataHolder = new SettingsDataHolder(0);
+        itemDataHolder = new MyDataHolder(0);
         itemDataHolder.setTitle("红娘一对一服务");
         itemDataHolder.setText("");
 
@@ -92,7 +91,7 @@ public class MyAdapter extends BaseAdapter<SettingsDataHolder> implements OnRecy
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        final SettingsDataHolder dataHolder = mDatas.get(position);
+        final MyDataHolder dataHolder = mDatas.get(position);
         final int itemViewType = dataHolder.getType();
         switch (itemViewType) {
             case 0:
@@ -114,14 +113,6 @@ public class MyAdapter extends BaseAdapter<SettingsDataHolder> implements OnRecy
 
     @Override
     public void onItemClick(View view, int position) {
-        final String title =
-                mDatas.get(position).getTitle();
-        switch (title) {
-            case "意见反馈":
-                FeedbackAgent agent = new FeedbackAgent(mContext);
-                agent.startDefaultThreadActivity();
-                break;
-        }
     }
 
     public class SettingsViewHolder extends BaseViewHolder {
@@ -135,7 +126,7 @@ public class MyAdapter extends BaseAdapter<SettingsDataHolder> implements OnRecy
             ButterKnife.bind(this, view);
         }
 
-        public void bind(Context context, SettingsDataHolder datHolder, int position) {
+        public void bind(Context context, MyDataHolder datHolder, int position) {
             mTitleText.setText(datHolder.getTitle());
             mTextText.setText(datHolder.getText());
         }
@@ -148,7 +139,7 @@ public class MyAdapter extends BaseAdapter<SettingsDataHolder> implements OnRecy
             super(view, onItemClickListener);
         }
 
-        public void bind(Context context, SettingsDataHolder datHolder, int position) {
+        public void bind(Context context, MyDataHolder datHolder, int position) {
 
         }
     }
@@ -173,7 +164,7 @@ public class MyAdapter extends BaseAdapter<SettingsDataHolder> implements OnRecy
             ButterKnife.bind(this, view);
         }
 
-        public void bind(Context context, SettingsDataHolder datHolder, int position) {
+        public void bind(Context context, MyDataHolder datHolder, int position) {
             final User user = mUser;
             mIcon.setImageURI(Uri.parse(user.getIcon()));
             mTitleText.setText(user.getUsername());

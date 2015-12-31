@@ -20,6 +20,7 @@ import com.baidu.location.Poi;
 import com.baidu.location.service.LocationService;
 import com.xiangqin.app.R;
 import com.xiangqin.app.XQApplication;
+import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.fragment.LoversFragment;
 import com.xiangqin.app.fragment.MessageFragment;
 import com.xiangqin.app.fragment.MyFragment;
@@ -167,6 +168,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         initPush();
         initData();
         initView();
+    }
+
+    @Override
+    public void onEvent(Object obj) {
+        if (obj instanceof ActionEvent) {
+            final ActionEvent actionEvent = (ActionEvent) obj;
+            if ("logout".equals(actionEvent.mAction)) {
+                finish();
+            }
+        }
+
     }
 
     @Override

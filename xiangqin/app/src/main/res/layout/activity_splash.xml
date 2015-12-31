@@ -10,11 +10,13 @@
         android:layout_height="match_parent" />
 
     <LinearLayout
+        android:id="@+id/buttons_layout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:layout_marginBottom="25dp"
         android:orientation="horizontal"
+        android:visibility="invisible"
         android:weightSum="2.0">
 
         <Button

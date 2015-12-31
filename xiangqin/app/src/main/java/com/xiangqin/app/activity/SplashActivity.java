@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
 
 import com.xiangqin.app.R;
 import com.xiangqin.app.event.ActionEvent;
@@ -15,6 +15,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SplashActivity extends BaseActivity {
+
+    @Bind(R.id.buttons_layout)
+    ViewGroup mButtonsLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +38,9 @@ public class SplashActivity extends BaseActivity {
             final ActionEvent action = (ActionEvent) event;
             if ("account".equals(action.mAction)) {
                 finish();
+            } else if ("image".equals(action.mAction)) {
+                boolean show = (boolean) action.mData;
+                mButtonsLayout.setVisibility(show ? View.VISIBLE : View.INVISIBLE);
             }
         }
     }
@@ -48,5 +54,6 @@ public class SplashActivity extends BaseActivity {
     public void onRegisterButtonClick(View view) {
         startActivity(IntentGenerator.genSimpleActivityIntent(this, UserEditActivity.class));
     }
+
 
 }

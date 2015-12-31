@@ -8,11 +8,14 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.xiangqin.app.R;
+import com.xiangqin.app.event.ActionEvent;
+import com.xiangqin.app.model.User;
 import com.xiangqin.app.utils.DisplayUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by dandanba on 11/16/15.
@@ -26,45 +29,45 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> implements 
         SettingsDataHolder itemDataHolder;
 
         mDatas.add(new SettingsDataHolder(1));
-
-        itemDataHolder = new SettingsDataHolder(0);
-        itemDataHolder.setTitle("推送设置");
-        itemDataHolder.setText("");
-
-        mDatas.add(itemDataHolder);
-
-        itemDataHolder = new SettingsDataHolder(0);
-        itemDataHolder.setTitle("账号保护");
-        itemDataHolder.setText("");
-
-        mDatas.add(itemDataHolder);
-
-
-        itemDataHolder = new SettingsDataHolder(0);
-        itemDataHolder.setTitle("更换手机");
-        itemDataHolder.setText("");
-
-        mDatas.add(itemDataHolder);
-
-        itemDataHolder = new SettingsDataHolder(0);
-        itemDataHolder.setTitle("修改密码");
-        itemDataHolder.setText("");
-
-        mDatas.add(itemDataHolder);
-
-        itemDataHolder = new SettingsDataHolder(0);
-        itemDataHolder.setTitle("清除缓存");
-        itemDataHolder.setText("");
-
-        mDatas.add(itemDataHolder);
-
-        itemDataHolder = new SettingsDataHolder(0);
-        itemDataHolder.setTitle("邀请好友使用");
-        itemDataHolder.setText("");
-
-        mDatas.add(itemDataHolder);
-
-        mDatas.add(new SettingsDataHolder(1));
+//
+//        itemDataHolder = new SettingsDataHolder(0);
+//        itemDataHolder.setTitle("推送设置");
+//        itemDataHolder.setText("");
+//
+//        mDatas.add(itemDataHolder);
+//
+//        itemDataHolder = new SettingsDataHolder(0);
+//        itemDataHolder.setTitle("账号保护");
+//        itemDataHolder.setText("");
+//
+//        mDatas.add(itemDataHolder);
+//
+//
+//        itemDataHolder = new SettingsDataHolder(0);
+//        itemDataHolder.setTitle("更换手机");
+//        itemDataHolder.setText("");
+//
+//        mDatas.add(itemDataHolder);
+//
+//        itemDataHolder = new SettingsDataHolder(0);
+//        itemDataHolder.setTitle("修改密码");
+//        itemDataHolder.setText("");
+//
+//        mDatas.add(itemDataHolder);
+//
+//        itemDataHolder = new SettingsDataHolder(0);
+//        itemDataHolder.setTitle("清除缓存");
+//        itemDataHolder.setText("");
+//
+//        mDatas.add(itemDataHolder);
+//
+//        itemDataHolder = new SettingsDataHolder(0);
+//        itemDataHolder.setTitle("邀请好友使用");
+//        itemDataHolder.setText("");
+//
+//        mDatas.add(itemDataHolder);
+//
+//        mDatas.add(new SettingsDataHolder(1));
 
         itemDataHolder = new SettingsDataHolder(0);
         itemDataHolder.setTitle("意见反馈");
@@ -145,6 +148,7 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> implements 
                 FeedbackAgent agent = new FeedbackAgent(mContext);
                 agent.startDefaultThreadActivity();
                 break;
+
         }
     }
 
@@ -186,7 +190,10 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> implements 
         public void onButtonClick(View view) {
             final String title = (String) view.getTag();
             if (title.equals("退出登录")) {
-
+                final User user = User.getUser(mContext);
+                user.logOut();
+                User.logout(mContext);
+                EventBus.getDefault().post(new ActionEvent("logout"));
             }
         }
 

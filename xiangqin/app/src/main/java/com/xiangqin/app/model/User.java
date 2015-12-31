@@ -1,20 +1,14 @@
 package com.xiangqin.app.model;
 
-import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
-import android.widget.Toast;
 
-import com.alibaba.fastjson.JSONObject;
 import com.avos.avoscloud.AVClassName;
-import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVPush;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
-import com.avos.avoscloud.SendCallback;
 import com.xiangqin.app.utils.PreferencesUtils;
-import com.xiangqin.app.utils.ToastUtils;
 
 @AVClassName("User")
 public class User extends AVUser {
@@ -32,6 +26,11 @@ public class User extends AVUser {
     public static void putUser(Context context, User user) {
         PreferencesUtils.putString(context, "user", user.toString());
     }
+
+    public static void logout(Context context) {
+        PreferencesUtils.putString(context, "user", "");
+    }
+
 
     // {"性别:sex", "生日:birthday", "身高:height", "学历:education", "婚姻状况:state"}
     //{"工作地区:area", "月收入:earning", "昵称:nickname"}

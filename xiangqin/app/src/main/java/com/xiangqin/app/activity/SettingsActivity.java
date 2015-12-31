@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.xiangqin.app.R;
+import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.fragment.SettingsFragment;
 
 import butterknife.Bind;
@@ -32,4 +33,17 @@ public class SettingsActivity extends BaseActivity {
     public void onLeftButtonClick(View view) {
         onBackPressed();
     }
+
+    @Override
+    public void onEvent(Object obj) {
+        if (obj instanceof ActionEvent) {
+            final ActionEvent actionEvent = (ActionEvent) obj;
+            if ("logout".equals(actionEvent.mAction)) {
+                finish();
+            }
+        }
+
+    }
+
+
 }

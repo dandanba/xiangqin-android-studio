@@ -1,6 +1,5 @@
 package com.xiangqin.app.fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,18 +10,30 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import me.relex.circleindicator.CircleIndicator;
 import com.xiangqin.app.R;
+import com.xiangqin.app.event.ActionEvent;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+import me.relex.circleindicator.CircleIndicator;
+
+
 /**
  * Created by rharter on 11/11/13.
  */
-public class ImagePagerFragment extends Fragment {
+public class ImagePagerFragment extends Fragment implements ViewPager.OnPageChangeListener {
     ViewPager mPager;
     ImagePagerAdapter mAdapter;
+    static final List<PageInfo> PAGES = new ArrayList<PageInfo>();
+
+    static {
+        PAGES.add(new PageInfo(R.mipmap.splash_1));
+        PAGES.add(new PageInfo(R.mipmap.splash_2));
+        PAGES.add(new PageInfo(R.mipmap.splash_3));
+        PAGES.add(new PageInfo(R.mipmap.splash_4));
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -44,25 +55,36 @@ public class ImagePagerFragment extends Fragment {
 
         CircleIndicator indicator = (CircleIndicator) view.findViewById(R.id.indicator);
         indicator.setViewPager(mPager);
+        indicator.setOnPageChangeListener(this);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        final ActionEvent actionEvent = new ActionEvent("image");
+        actionEvent.mData = position == PAGES.size() - 1;
+        EventBus.getDefault().post(actionEvent);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
+    }
+
+    private static class PageInfo {
+        int resId;
+
+        PageInfo(int resId) {
+            this.resId = resId;
+        }
     }
 
     public static class ImagePagerAdapter extends PagerAdapter {
-        private static class PageInfo {
-            int resId;
 
-            PageInfo(int resId) {
-                this.resId = resId;
-            }
-        }
-
-        static final List<PageInfo> PAGES = new ArrayList<PageInfo>();
-
-        static {
-            PAGES.add(new PageInfo(R.mipmap.splash_1));
-            PAGES.add(new PageInfo(R.mipmap.splash_2));
-            PAGES.add(new PageInfo(R.mipmap.splash_3));
-            PAGES.add(new PageInfo(R.mipmap.splash_4));
-        }
 
         Context mContext;
         LayoutInflater mLayoutInflater;

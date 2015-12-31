@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.SaveCallback;
 import com.xiangqin.app.R;
 import com.xiangqin.app.XQApplication;
 import com.xiangqin.app.dialog.DateFragmentDialog;
@@ -125,8 +127,19 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         user.setHeight(height);
         user.setState(state);
 
-        XQApplication.getInstance().getMessager().put("user", user);
-        startActivity(IntentGenerator.genSimpleActivityIntent(this, RegisterActivity.class));
+        if (mUpdateUser) {
+            mUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(AVException e) {
+                    if (e == null) {
+                        finish();
+                    }
+                }
+            });
+        } else {
+            XQApplication.getInstance().getMessager().put("user", user);
+            startActivity(IntentGenerator.genSimpleActivityIntent(this, RegisterActivity.class));
+        }
     }
 
     private String getTextByUser(String tag) {
