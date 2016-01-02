@@ -16,6 +16,7 @@ import com.leancloud.im.guide.AVImClientManager;
 import com.leancloud.im.guide.Constants;
 import com.leancloud.im.guide.activity.AVSingleChatActivity;
 import com.xiangqin.app.R;
+import com.xiangqin.app.model.Notification;
 import com.xiangqin.app.model.User;
 import com.xiangqin.app.utils.DisplayUtils;
 import com.xiangqin.app.utils.ToastUtils;
@@ -129,7 +130,7 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
         TextView mTitleText;
 
         @OnClick(R.id.chat)
-            public void onChatButtonClick(View view) {
+        public void onChatButtonClick(View view) {
             openClient(mUser);
         }
 
@@ -143,15 +144,21 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
             mTitleText.setText(mUser.getUsername());
         }
 
-        private void openClient(final User targentUser) {
+        private void openClient(final User targetUser) {
             final User user = User.getUser(mContext);
             AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
                 @Override
                 public void done(AVIMClient avimClient, AVIMException e) {
                     if (filterException(e)) {
+                        Notification notification = new Notification();
+                        notification.setMessage("私聊");
+                        notification.setUser(user.getUsername());
+                        notification.setTargetUser(targetUser.getUsername());
+                        notification.saveInBackground();
+
                         Intent intent = new Intent(mContext, AVSingleChatActivity.class);
-                        intent.putExtra(Constants.MEMBER_ID, targentUser.getUsername());
-                        intent.putExtra(Constants.ACTIVITY_TITLE, targentUser.getUsername());
+                        intent.putExtra(Constants.MEMBER_ID, targetUser.getUsername());
+                        intent.putExtra(Constants.ACTIVITY_TITLE, targetUser.getUsername());
                         mContext.startActivity(intent);
                     }
                 }

@@ -14,6 +14,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.leancloud.im.guide.MessageHandler;
 import com.xiangqin.app.message.Messager;
+import com.xiangqin.app.model.Notification;
 import com.xiangqin.app.model.User;
 
 public class XQApplication extends Application {
@@ -34,11 +35,13 @@ public class XQApplication extends Application {
         super.onCreate();
 
         locationService = new LocationService(getApplicationContext());
-        mVibrator =(Vibrator)getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
+        mVibrator = (Vibrator) getApplicationContext().getSystemService(Service.VIBRATOR_SERVICE);
         WriteLog.getInstance().init(); // 初始化日志
         SDKInitializer.initialize(getApplicationContext());
 
         Fresco.initialize(this);
+
+        AVObject.registerSubclass(Notification.class);
         AVObject.registerSubclass(User.class);
         AVOSCloud.initialize(this, Constants.AVOS_APP_ID, Constants.AVOS_APP_KEY);
 

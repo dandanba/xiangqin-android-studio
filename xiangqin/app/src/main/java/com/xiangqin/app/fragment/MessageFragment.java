@@ -17,9 +17,10 @@ import com.xiangqin.app.XQApplication;
 import com.xiangqin.app.activity.InfoActivity;
 import com.xiangqin.app.activity.IntentGenerator;
 import com.xiangqin.app.adapter.ItemDivider;
+import com.xiangqin.app.adapter.NotificationAdapter;
+import com.xiangqin.app.adapter.NotificationDataHolder;
 import com.xiangqin.app.adapter.OnRecyclerViewItemClickListener;
-import com.xiangqin.app.adapter.UserAdapter;
-import com.xiangqin.app.adapter.UserDataHolder;
+import com.xiangqin.app.model.Notification;
 import com.xiangqin.app.model.User;
 import com.xiangqin.app.utils.ToastUtils;
 
@@ -35,7 +36,7 @@ import butterknife.ButterKnife;
 public class MessageFragment extends BaseFragment implements OnRecyclerViewItemClickListener {
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    AVQuery<User> mUserQuery;
+    AVQuery<Notification> mNotificationQuery;
 
     public static MessageFragment newInstance() {
         MessageFragment fragment = new MessageFragment();
@@ -44,16 +45,16 @@ public class MessageFragment extends BaseFragment implements OnRecyclerViewItemC
         return fragment;
     }
 
-    UserAdapter mAdapter;
+    NotificationAdapter mAdapter;
     User mUser;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mAdapter = new UserAdapter(context, this);
-        mUserQuery = AVQuery.getQuery(User.class);
+        mAdapter = new NotificationAdapter(context, this);
+        mNotificationQuery = AVQuery.getQuery(Notification.class);
         mUser = User.getUser(mBaseActivity);
-        mUserQuery.whereNotEqualTo("sex", mUser.getSexInt());
+        mNotificationQuery.whereEqualTo("targetUser", mUser.getUsername());
     }
 
     @Nullable
@@ -74,20 +75,20 @@ public class MessageFragment extends BaseFragment implements OnRecyclerViewItemC
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setAdapter(mAdapter);
-        mUserQuery.findInBackground(new FindCallback<User>() {
+        mNotificationQuery.findInBackground(new FindCallback<Notification>() {
             @Override
-            public void done(List<User> list, AVException e) {
+            public void done(List<Notification> list, AVException e) {
                 if (e != null) {
                     ToastUtils.showToast(mBaseActivity, e.toString());
                     return;
                 }
 
-                final List<UserDataHolder> datas = new ArrayList<UserDataHolder>();
+                final List<NotificationDataHolder> datas = new ArrayList<NotificationDataHolder>();
                 final int size = list.size();
-                UserDataHolder data;
+                NotificationDataHolder data;
                 for (int i = 0; i < size; i++) {
-                    data = new UserDataHolder(0);
-                    data.setUser(list.get(i));
+                    data = new NotificationDataHolder(0);
+                    data.setNotification(list.get(i));
                     datas.add(data);
                 }
                 mAdapter.addAll(datas);
@@ -103,9 +104,9 @@ public class MessageFragment extends BaseFragment implements OnRecyclerViewItemC
 
     @Override
     public void onItemClick(View view, int position) {
-        final UserDataHolder data = mAdapter.mDatas.get(position);
-        final User user = data.getUser();
-        XQApplication.getInstance().getMessager().put("user", user);
+        final NotificationDataHolder data = mAdapter.mDatas.get(position);
+        final Notification Notification = data.getNotification();
+        XQApplication.getInstance().getMessager().put("Notification", Notification);
         startActivity(IntentGenerator.genSimpleActivityIntent(mBaseActivity, InfoActivity.class));
     }
 }
