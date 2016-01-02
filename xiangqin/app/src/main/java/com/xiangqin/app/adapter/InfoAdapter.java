@@ -1,19 +1,28 @@
 package com.xiangqin.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.leancloud.im.guide.AVImClientManager;
+import com.leancloud.im.guide.Constants;
+import com.leancloud.im.guide.activity.AVSingleChatActivity;
 import com.xiangqin.app.R;
 import com.xiangqin.app.model.User;
 import com.xiangqin.app.utils.DisplayUtils;
+import com.xiangqin.app.utils.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dandanba on 11/16/15.
@@ -119,6 +128,11 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
         @Bind(R.id.title)
         TextView mTitleText;
 
+        @OnClick(R.id.chat)
+            public void onChatButtonClick(View view) {
+            openClient(mUser);
+        }
+
         public HeaderViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
             super(view, onItemClickListener);
             ButterKnife.bind(this, view);
@@ -127,6 +141,31 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
         public void bind(Context context, UserDataHolder dataHolder, int position) {
             mIcon.setImageURI(Uri.parse(mUser.getIcon()));
             mTitleText.setText(mUser.getUsername());
+        }
+
+        private void openClient(final User targentUser) {
+            final User user = User.getUser(mContext);
+            AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+                    if (filterException(e)) {
+                        Intent intent = new Intent(mContext, AVSingleChatActivity.class);
+                        intent.putExtra(Constants.MEMBER_ID, targentUser.getUsername());
+                        intent.putExtra(Constants.ACTIVITY_TITLE, targentUser.getUsername());
+                        mContext.startActivity(intent);
+                    }
+                }
+            });
+        }
+
+        protected boolean filterException(Exception e) {
+            if (e != null) {
+                e.printStackTrace();
+                ToastUtils.showToast(mContext, e.getMessage());
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 

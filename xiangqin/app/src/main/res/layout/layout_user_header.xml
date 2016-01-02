@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="200dp"
+    android:layout_height="280dp"
     android:orientation="vertical">
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -14,18 +14,31 @@
         android:id="@+id/icon"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_centerInParent="true"
+        android:layout_centerHorizontal="true"
         android:layout_margin="15dp"
         android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/title"
-        android:layout_below="@id/icon"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/icon"
+        android:layout_centerHorizontal="true"
         android:layout_gravity="center_vertical"
         android:textColor="@color/gray"
+        android:textSize="17sp" />
+
+    <TextView
+        android:id="@+id/chat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/login_btn_bg"
+        android:text="与TA私聊"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/white"
         android:textSize="17sp" />
 
 </RelativeLayout>

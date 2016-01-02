@@ -6,10 +6,13 @@ import android.os.Vibrator;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
+import com.avos.avoscloud.im.v2.AVIMMessageManager;
+import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.baidu.location.service.LocationService;
 import com.baidu.location.service.WriteLog;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.leancloud.im.guide.MessageHandler;
 import com.xiangqin.app.message.Messager;
 import com.xiangqin.app.model.User;
 
@@ -43,7 +46,14 @@ public class XQApplication extends Application {
 //        AVAnalytics.enableCrashReport(this.getApplicationContext(), true);
         AVOSCloud.setLastModifyEnabled(true);
         AVOSCloud.setDebugLogEnabled(true);
+
+        // 必须在启动的时候注册 MessageHandler
+        // 应用一启动就会重连，服务器会推送离线消息过来，需要 MessageHandler 来处理
+        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler(this));
+
         sInstance = this;
+
+
     }
 
     public Messager getMessager() {

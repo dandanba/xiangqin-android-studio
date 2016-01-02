@@ -58,4 +58,5 @@ dependencies {
     compile 'me.relex:circleindicator:1.1.5@aar'
     compile 'com.timehop.fragmentswitcher:library:1.1.2'
     compile(name: 'multi-image-selector', ext: 'aar')
+    compile 'com.github.stuxuhai:jpinyin:1.0'
 }
