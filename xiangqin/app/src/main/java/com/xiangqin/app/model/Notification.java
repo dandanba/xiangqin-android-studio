@@ -16,6 +16,7 @@ public class Notification extends AVObject {
         super(in);
     }
 
+
     //此处为我们的默认实现，当然你也可以自行实现
     public String getUser() {
         return getString("user");

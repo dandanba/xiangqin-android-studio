@@ -1,16 +1,32 @@
 package com.xiangqin.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
+import com.avos.avoscloud.im.v2.AVIMClient;
+import com.avos.avoscloud.im.v2.AVIMException;
+import com.avos.avoscloud.im.v2.callback.AVIMClientCallback;
+import com.leancloud.im.guide.AVImClientManager;
+import com.leancloud.im.guide.Constants;
+import com.leancloud.im.guide.activity.AVSingleChatActivity;
 import com.xiangqin.app.R;
 import com.xiangqin.app.model.Notification;
+import com.xiangqin.app.model.User;
+import com.xiangqin.app.utils.ToastUtils;
+import com.xiangqin.app.widget.RelativeTimeTextView;
+
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by dandanba on 11/16/15.
@@ -60,8 +76,59 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
         TextView mTitleText;
         @Bind(R.id.text)
         TextView mTextText;
-        @Bind(R.id.info)
-        TextView mInfoText;
+        @Bind(R.id.time)
+        RelativeTimeTextView mTime;
+
+        @OnClick(R.id.text)
+        public void onTextButtonClick(View view) {
+            final TextView textView = (TextView) view;
+            final String text = textView.getText().toString();
+            final Notification notification = (Notification) view.getTag();
+            final AVQuery mUserQuery = AVQuery.getQuery(User.class);
+            switch (text) {
+                case "打招呼":
+                    mUserQuery.whereEqualTo("username", notification.getTargetUser());
+                    mUserQuery.findInBackground(new FindCallback<User>() {
+                        @Override
+                        public void done(List<User> list, AVException e) {
+                            if (e != null) {
+                                ToastUtils.showToast(mContext, e.toString());
+                                return;
+                            }
+
+                            final User targetUser = list.get(0);
+                            final User user = User.getCurrentUser(User.class);
+                            targetUser.sayHello(user);
+
+                            Notification notification = new Notification();
+                            notification.setMessage("打招呼");
+                            notification.setUser(user.getUsername());
+                            notification.setTargetUser(targetUser.getUsername());
+                            notification.saveInBackground();
+                        }
+                    });
+
+                    break;
+                case "私聊":
+                    mUserQuery.whereEqualTo("username", notification.getTargetUser());
+                    mUserQuery.findInBackground(new FindCallback<User>() {
+                        @Override
+                        public void done(List<User> list, AVException e) {
+                            if (e != null) {
+                                ToastUtils.showToast(mContext, e.toString());
+                                return;
+                            }
+
+                            final User targetUser = list.get(0);
+                            openClient(targetUser);
+                        }
+                    });
+
+                    break;
+                default:
+                    break;
+            }
+        }
 
         public UserViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
             super(view, onItemClickListener);
@@ -70,9 +137,46 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
 
         public void bind(Context context, NotificationDataHolder datHolder, int position) {
             final Notification user = datHolder.getNotification();
-            mTitleText.setText(user.getUser());
-            mTextText.setText(user.getTargetUser());
-            mInfoText.setText(user.getMessage());
+            mTitleText.setText(user.getTargetUser() +
+                            (user.getMessage().equals("打招呼") ? " 向您打了声招呼" :
+                                    user.getMessage().equals("私聊") ? " 想和您私聊" : "")
+            );
+            mTime.setReferenceTime(user.getCreatedAt().getTime());
+            mTextText.setText(user.getMessage());
+            mTextText.setTag(user);
+        }
+
+
+        private void openClient(final User targetUser) {
+            final User user = User.getUser(mContext);
+            AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
+                @Override
+                public void done(AVIMClient avimClient, AVIMException e) {
+                    if (filterException(e)) {
+                        Notification notification = new Notification();
+                        notification.setMessage("私聊");
+                        notification.setUser(user.getUsername());
+                        notification.setTargetUser(targetUser.getUsername());
+                        notification.saveInBackground();
+
+                        Intent intent = new Intent(mContext, AVSingleChatActivity.class);
+                        intent.putExtra(Constants.MEMBER_ID, targetUser.getUsername());
+                        intent.putExtra(Constants.ACTIVITY_TITLE, targetUser.getUsername());
+                        mContext.startActivity(intent);
+                    }
+                }
+            });
+        }
+
+
+        protected boolean filterException(Exception e) {
+            if (e != null) {
+                e.printStackTrace();
+                ToastUtils.showToast(mContext, e.getMessage());
+                return false;
+            } else {
+                return true;
+            }
         }
     }
 }
