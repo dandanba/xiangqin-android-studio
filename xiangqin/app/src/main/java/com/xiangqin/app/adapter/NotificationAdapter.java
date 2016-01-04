@@ -87,7 +87,7 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
             final AVQuery mUserQuery = AVQuery.getQuery(User.class);
             switch (text) {
                 case "打招呼":
-                    mUserQuery.whereEqualTo("username", notification.getTargetUser());
+                    mUserQuery.whereEqualTo("username", notification.getUser());
                     mUserQuery.findInBackground(new FindCallback<User>() {
                         @Override
                         public void done(List<User> list, AVException e) {
@@ -110,7 +110,7 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
 
                     break;
                 case "私聊":
-                    mUserQuery.whereEqualTo("username", notification.getTargetUser());
+                    mUserQuery.whereEqualTo("username", notification.getUser());
                     mUserQuery.findInBackground(new FindCallback<User>() {
                         @Override
                         public void done(List<User> list, AVException e) {
@@ -136,14 +136,14 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
         }
 
         public void bind(Context context, NotificationDataHolder datHolder, int position) {
-            final Notification user = datHolder.getNotification();
-            mTitleText.setText(user.getTargetUser() +
-                            (user.getMessage().equals("打招呼") ? " 向您打了声招呼" :
-                                    user.getMessage().equals("私聊") ? " 想和您私聊" : "")
+            final Notification notification = datHolder.getNotification();
+            mTitleText.setText(notification.getUser() +
+                            (notification.getMessage().equals("打招呼") ? " 向您打了声招呼" :
+                                    notification.getMessage().equals("私聊") ? " 想和您私聊" : "")
             );
-            mTime.setReferenceTime(user.getCreatedAt().getTime());
-            mTextText.setText(user.getMessage());
-            mTextText.setTag(user);
+            mTime.setReferenceTime(notification.getCreatedAt().getTime());
+            mTextText.setText(notification.getMessage());
+            mTextText.setTag(notification);
         }
 
 

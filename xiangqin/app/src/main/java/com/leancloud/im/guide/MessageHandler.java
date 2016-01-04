@@ -12,7 +12,6 @@ import com.leancloud.im.guide.event.ImTypeMessageEvent;
 import com.xiangqin.app.R;
 
 import de.greenrobot.event.EventBus;
-
 /**
  * Created by zhangxiaobo on 15/4/20.
  */

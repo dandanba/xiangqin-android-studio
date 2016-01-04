@@ -27,7 +27,6 @@ import butterknife.Bind;
  * 一对一单聊的页面，需要传入 Constants.MEMBER_ID
  */
 public class AVSingleChatActivity extends AVBaseActivity {
-
   @Bind(R.id.toolbar)
   protected Toolbar toolbar;
 

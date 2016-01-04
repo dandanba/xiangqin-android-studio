@@ -14,7 +14,6 @@ import com.xiangqin.app.R;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
 /**
  * Created by wli on 15/8/26.
  */

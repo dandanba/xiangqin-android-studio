@@ -20,11 +20,11 @@ import com.avos.avoscloud.im.v2.callback.AVIMMessagesQueryCallback;
 import com.avos.avoscloud.im.v2.messages.AVIMTextMessage;
 import com.leancloud.im.guide.AVInputBottomBar;
 import com.leancloud.im.guide.NotificationUtils;
+import com.xiangqin.app.R;
 import com.leancloud.im.guide.adapter.MultipleItemAdapter;
 import com.leancloud.im.guide.event.ImTypeMessageEvent;
 import com.leancloud.im.guide.event.ImTypeMessageResendEvent;
 import com.leancloud.im.guide.event.InputBottomBarTextEvent;
-import com.xiangqin.app.R;
 
 import java.util.List;
 

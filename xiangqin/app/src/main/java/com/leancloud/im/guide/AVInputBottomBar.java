@@ -18,7 +18,6 @@ import com.xiangqin.app.R;
 
 import de.greenrobot.event.EventBus;
 
-
 /**
  * Created by wli on 15/7/24.
  * 专门负责输入的底部操作栏，与 activity 解耦
