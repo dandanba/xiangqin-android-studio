@@ -52,7 +52,7 @@ public class XQApplication extends Application {
 
         // 必须在启动的时候注册 MessageHandler
         // 应用一启动就会重连，服务器会推送离线消息过来，需要 MessageHandler 来处理
-        AVIMMessageManager.registerMessageHandler(AVIMTypedMessage.class, new MessageHandler(this));
+        AVIMMessageManager.registerDefaultMessageHandler(new MessageHandler(this));
 
         sInstance = this;
 
