@@ -44,7 +44,6 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
 
         mDatas.add(new UserDataHolder(2));
 
-
         itemDataHolder = new UserDataHolder(1);
         itemDataHolder.setTag("nickname");
         mDatas.add(itemDataHolder);
@@ -145,7 +144,7 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
         }
 
         private void openClient(final User targetUser) {
-            final User user = User.getUser(mContext);
+            final User user = User.getCurrentUser(User.class);
             AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
                 @Override
                 public void done(AVIMClient avimClient, AVIMException e) {

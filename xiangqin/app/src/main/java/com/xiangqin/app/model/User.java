@@ -13,19 +13,19 @@ import com.xiangqin.app.utils.PreferencesUtils;
 @AVClassName("User")
 public class User extends AVUser {
     public static final Creator CREATOR = AVObjectCreator.instance;
-
-    public static User getUser(Context context) {
-        final String obj = PreferencesUtils.getString(context, "user");
-        try {
-            return (User) AVUser.parseAVObject(obj);
-        } catch (Exception e) {
-        }
-        return null;
-    }
-
-    public static void putUser(Context context, User user) {
-        PreferencesUtils.putString(context, "user", user.toString());
-    }
+//
+//    public static User getUser(Context context) {
+//        final String obj = PreferencesUtils.getString(context, "user");
+//        try {
+//            return (User) AVUser.parseAVObject(obj);
+//        } catch (Exception e) {
+//        }
+//        return null;
+//    }
+//
+//    public static void putUser(Context context, User user) {
+//        PreferencesUtils.putString(context, "user", user.toString());
+//    }
 
     public static void logout(Context context) {
         PreferencesUtils.putString(context, "user", "");

@@ -52,7 +52,7 @@ public class NearbyFragment extends BaseFragment implements OnRecyclerViewItemCl
         super.onAttach(context);
         mAdapter = new UserAdapter(context, this);
         mUserQuery = AVQuery.getQuery(User.class);
-        mUser = User.getUser(mBaseActivity);
+        mUser =  User.getCurrentUser(User.class);
         mUserQuery.whereNotEqualTo("sex", mUser.getSexInt());
     }
 

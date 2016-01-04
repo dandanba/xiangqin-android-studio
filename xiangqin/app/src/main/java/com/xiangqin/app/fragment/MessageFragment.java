@@ -53,7 +53,7 @@ public class MessageFragment extends BaseFragment implements OnRecyclerViewItemC
         super.onAttach(context);
         mAdapter = new NotificationAdapter(context, this);
         mNotificationQuery = AVQuery.getQuery(Notification.class);
-        mUser = User.getUser(mBaseActivity);
+        mUser = User.getCurrentUser(User.class);
         mNotificationQuery.whereEqualTo("targetUser", mUser.getUsername());
     }
 

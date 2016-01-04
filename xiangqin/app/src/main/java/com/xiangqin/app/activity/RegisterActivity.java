@@ -1,6 +1,5 @@
 package com.xiangqin.app.activity;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -82,7 +81,6 @@ public class RegisterActivity extends BaseActivity {
 
             protected void onPostExecute(User result) {
                 if (result != null) {
-                    User.putUser(RegisterActivity.this, result);
                     EventBus.getDefault().post(new ActionEvent("account"));
                     startActivity(IntentGenerator.genSimpleActivityIntent(RegisterActivity.this, MainActivity.class));
                     finish();

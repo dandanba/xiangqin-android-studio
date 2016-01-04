@@ -12,12 +12,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.xiangqin.app.R;
 import com.xiangqin.app.activity.IntentGenerator;
 import com.xiangqin.app.activity.UserEditActivity;
+import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
 import com.xiangqin.app.utils.DisplayUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by dandanba on 11/16/15.
@@ -132,7 +134,6 @@ public class MyAdapter extends BaseAdapter<MyDataHolder> implements OnRecyclerVi
         }
     }
 
-
     public class DividerViewHolder extends BaseViewHolder {
 
         public DividerViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
@@ -153,6 +154,12 @@ public class MyAdapter extends BaseAdapter<MyDataHolder> implements OnRecyclerVi
         TextView mTextText;
         @Bind(R.id.info)
         TextView mInfoText;
+
+
+        @OnClick(R.id.icon)
+        public void onHeadClick(View view) {
+            EventBus.getDefault().post(new ActionEvent("header"));
+        }
 
         @OnClick(R.id.eidt_button)
         public void onEditButtonClick(View view) {

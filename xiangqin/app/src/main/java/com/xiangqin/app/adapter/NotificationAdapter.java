@@ -148,7 +148,7 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
 
 
         private void openClient(final User targetUser) {
-            final User user = User.getUser(mContext);
+            final User user = User.getCurrentUser(User.class);
             AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
                 @Override
                 public void done(AVIMClient avimClient, AVIMException e) {

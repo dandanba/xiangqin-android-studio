@@ -53,7 +53,7 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         setContentView(R.layout.activity_edit);
 
         mUpdateUser = getIntent().getBooleanExtra("update_user", false);
-        mUser = mUpdateUser ? User.getUser(this) : new User();
+        mUser = mUpdateUser ? User.getCurrentUser(User.class) : new User();
         ButterKnife.bind(this);
         mCommonTitleText.setText(mUpdateUser ? "修改个人信息" : "个人信息");
         mNextButton.setText(mUpdateUser ? "修改" : "注册");

@@ -190,7 +190,7 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> implements 
         public void onButtonClick(View view) {
             final String title = (String) view.getTag();
             if (title.equals("退出登录")) {
-                final User user = User.getUser(mContext);
+                final User user = User.getCurrentUser(User.class);
                 user.logOut();
                 User.logout(mContext);
                 EventBus.getDefault().post(new ActionEvent("logout"));

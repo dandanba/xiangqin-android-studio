@@ -1,6 +1,5 @@
 package com.xiangqin.app.activity;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +13,6 @@ import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
@@ -59,7 +57,7 @@ public class LoginActivity extends BaseActivity {
                 super.onPostExecute(result);
                 if (result != null) {
                     EventBus.getDefault().post(new ActionEvent("account"));
-                    User.putUser(LoginActivity.this, result);
+                //    User.putUser(LoginActivity.this, result);
                     startActivity(IntentGenerator.genSimpleActivityIntent(LoginActivity.this, MainActivity.class));
                     finish();
                 }

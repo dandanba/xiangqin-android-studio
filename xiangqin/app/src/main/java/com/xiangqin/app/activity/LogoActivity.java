@@ -1,18 +1,14 @@
 package com.xiangqin.app.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.widget.ImageView;
 
 import com.xiangqin.app.R;
 import com.xiangqin.app.model.User;
 
-
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 public class LogoActivity extends BaseActivity {
 
@@ -25,7 +21,7 @@ public class LogoActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-                    final User user = User.getUser(LogoActivity.this);
+                    final User user = User.getCurrentUser(User.class);
                     if (user == null) {
                         startActivity(IntentGenerator.genSimpleActivityIntent(LogoActivity.this, SplashActivity.class));
                     } else {

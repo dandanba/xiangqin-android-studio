@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +17,8 @@ import com.xiangqin.app.XQApplication;
 import com.xiangqin.app.activity.InfoActivity;
 import com.xiangqin.app.activity.IntentGenerator;
 import com.xiangqin.app.adapter.GridSpacingItemDecoration;
-import com.xiangqin.app.adapter.ItemDivider;
 import com.xiangqin.app.adapter.LoverAdapter;
 import com.xiangqin.app.adapter.OnRecyclerViewItemClickListener;
-import com.xiangqin.app.adapter.UserAdapter;
 import com.xiangqin.app.adapter.UserDataHolder;
 import com.xiangqin.app.model.User;
 import com.xiangqin.app.utils.ToastUtils;
@@ -55,7 +52,7 @@ public class LoversFragment extends BaseFragment implements OnRecyclerViewItemCl
         super.onAttach(context);
         mAdapter = new LoverAdapter(context, this);
         mUserQuery = AVQuery.getQuery(User.class);
-        mUser = User.getUser(mBaseActivity);
+        mUser =  User.getCurrentUser(User.class);
         mUserQuery.whereNotEqualTo("sex", mUser.getSexInt());
     }
 
