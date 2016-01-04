@@ -1,6 +1,5 @@
 package com.xiangqin.app.model;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.avos.avoscloud.AVClassName;
@@ -8,30 +7,10 @@ import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVPush;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
-import com.xiangqin.app.utils.PreferencesUtils;
 
 @AVClassName("User")
 public class User extends AVUser {
     public static final Creator CREATOR = AVObjectCreator.instance;
-//
-//    public static User getUser(Context context) {
-//        final String obj = PreferencesUtils.getString(context, "user");
-//        try {
-//            return (User) AVUser.parseAVObject(obj);
-//        } catch (Exception e) {
-//        }
-//        return null;
-//    }
-//
-//    public static void putUser(Context context, User user) {
-//        PreferencesUtils.putString(context, "user", user.toString());
-//    }
-
-    public static void logout(Context context) {
-        PreferencesUtils.putString(context, "user", "");
-    }
-
-
     // {"性别:sex", "生日:birthday", "身高:height", "学历:education", "婚姻状况:state"}
     //{"工作地区:area", "月收入:earning", "昵称:nickname"}
 
@@ -117,8 +96,22 @@ public class User extends AVUser {
     }
 
     public String getIcon() {
+        return getString("icon");
+    }
+
+    public String getIconUrl() {
         final String icon = getString("icon");
-        return TextUtils.isEmpty(icon) ? "http://sfault-avatar.b0.upaiyun.com/346/390/3463903554-1030000000193988_huge256" : icon;
+        if (TextUtils.isEmpty(icon)) {
+            if (1 == getInt("sex")) {
+                return "http://ac-svu6vore.clouddn.com/ffe9afbf04793258.jpg";
+            } else {
+                return "http://ac-svu6vore.clouddn.com/fe93c66bca03d5e0.jpg";
+            }
+        } else {
+            return icon;
+        }
+
+
     }
 
     public void setIcon(String icon) {

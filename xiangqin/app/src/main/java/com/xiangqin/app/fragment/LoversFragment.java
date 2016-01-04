@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class LoversFragment extends BaseFragment implements OnRecyclerViewItemCl
         super.onAttach(context);
         mAdapter = new LoverAdapter(context, this);
         mUserQuery = AVQuery.getQuery(User.class);
-        mUser =  User.getCurrentUser(User.class);
+        mUser = User.getCurrentUser(User.class);
         mUserQuery.whereNotEqualTo("sex", mUser.getSexInt());
     }
 
@@ -62,7 +63,7 @@ public class LoversFragment extends BaseFragment implements OnRecyclerViewItemCl
         final View view = inflater.inflate(R.layout.fragment_recycler_view, container, false);
         ButterKnife.bind(this, view);
         //创建布局管理器
-        GridLayoutManager mLayoutManager = new GridLayoutManager(mBaseActivity,2);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(mBaseActivity, 2);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new GridSpacingItemDecoration(2, getResources().getDimensionPixelSize(R.dimen.space), false));
 
@@ -84,11 +85,15 @@ public class LoversFragment extends BaseFragment implements OnRecyclerViewItemCl
 
                 final List<UserDataHolder> datas = new ArrayList<UserDataHolder>();
                 final int size = list.size();
+                User user;
                 UserDataHolder data;
                 for (int i = 0; i < size; i++) {
-                    data = new UserDataHolder(0);
-                    data.setUser(list.get(i));
-                    datas.add(data);
+                    user = list.get(i);
+                    if (!TextUtils.isEmpty(user.getIcon())) {
+                        data = new UserDataHolder(0);
+                        data.setUser(user);
+                        datas.add(data);
+                    }
                 }
                 mAdapter.addAll(datas);
             }

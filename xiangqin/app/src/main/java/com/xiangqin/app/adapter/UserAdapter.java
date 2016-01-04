@@ -95,7 +95,7 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
 
         public void bind(Context context, UserDataHolder datHolder, int position) {
             final User user = datHolder.getUser();
-            mIcon.setImageURI(Uri.parse(user.getIcon()));
+            mIcon.setImageURI(Uri.parse(user.getIconUrl()));
             mTitleText.setText(user.getUsername());
             mTextText.setText(String.format("%1$s %2$s", user.getBirthday(), user.getArea()));
             mInfoText.setText(String.format("%1$scm %2$s", user.getHeight(), user.getEarning()));

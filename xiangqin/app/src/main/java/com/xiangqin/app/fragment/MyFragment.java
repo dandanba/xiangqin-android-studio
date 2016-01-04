@@ -91,7 +91,7 @@ public class MyFragment extends BaseFragment implements OnRecyclerViewItemClickL
 
                 try {
                     final String filePath = path.get(0);
-                    final String filename = filePath.substring(filePath.lastIndexOf("/"));
+                    final String filename = filePath.substring(filePath.lastIndexOf("/") + 1);
                     final AVFile file = AVFile.withAbsoluteLocalPath(filename, filePath);
                     file.saveInBackground(new SaveCallback() {
                         @Override

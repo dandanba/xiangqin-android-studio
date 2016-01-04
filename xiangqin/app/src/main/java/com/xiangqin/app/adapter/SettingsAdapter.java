@@ -192,7 +192,6 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> implements 
             if (title.equals("退出登录")) {
                 final User user = User.getCurrentUser(User.class);
                 user.logOut();
-                User.logout(mContext);
                 EventBus.getDefault().post(new ActionEvent("logout"));
             }
         }

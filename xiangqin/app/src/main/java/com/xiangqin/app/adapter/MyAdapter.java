@@ -173,7 +173,7 @@ public class MyAdapter extends BaseAdapter<MyDataHolder> implements OnRecyclerVi
 
         public void bind(Context context, MyDataHolder datHolder, int position) {
             final User user = mUser;
-            mIcon.setImageURI(Uri.parse(user.getIcon()));
+            mIcon.setImageURI(Uri.parse(user.getIconUrl()));
             mTitleText.setText(user.getUsername());
             mTextText.setText(String.format("%1$s %2$s", user.getBirthday(), user.getArea()));
             mInfoText.setText(String.format("%1$scm %2$s", user.getHeight(), user.getEarning()));

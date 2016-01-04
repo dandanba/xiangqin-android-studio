@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xiangqin.app.R;
@@ -69,7 +68,7 @@ public class LoverAdapter extends BaseAdapter<UserDataHolder> {
 
         public void bind(Context context, UserDataHolder datHolder, int position) {
             final User user = datHolder.getUser();
-            mIcon.setImageURI(Uri.parse(user.getIcon()));
+            mIcon.setImageURI(Uri.parse(user.getIconUrl()));
         }
     }
 }

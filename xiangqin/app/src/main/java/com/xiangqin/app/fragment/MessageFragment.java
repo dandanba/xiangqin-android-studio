@@ -13,9 +13,6 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.xiangqin.app.R;
-import com.xiangqin.app.XQApplication;
-import com.xiangqin.app.activity.InfoActivity;
-import com.xiangqin.app.activity.IntentGenerator;
 import com.xiangqin.app.adapter.ItemDivider;
 import com.xiangqin.app.adapter.NotificationAdapter;
 import com.xiangqin.app.adapter.NotificationDataHolder;
@@ -104,9 +101,5 @@ public class MessageFragment extends BaseFragment implements OnRecyclerViewItemC
 
     @Override
     public void onItemClick(View view, int position) {
-        final NotificationDataHolder data = mAdapter.mDatas.get(position);
-        final Notification Notification = data.getNotification();
-        XQApplication.getInstance().getMessager().put("Notification", Notification);
-        startActivity(IntentGenerator.genSimpleActivityIntent(mBaseActivity, InfoActivity.class));
     }
 }
