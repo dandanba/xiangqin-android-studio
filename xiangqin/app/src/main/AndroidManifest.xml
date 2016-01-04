@@ -95,17 +95,10 @@
         <!-- umeng meta data -->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="55cdc211e0f55a4ef9001bb7" />
+            android:value="568a2ab967e58ee459001335" />
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Umeng" />
-
-        <activity
-            android:name="com.leancloud.im.guide.activity.AVSquareActivity"
-            android:launchMode="singleTask"
-            android:windowSoftInputMode="adjustResize|stateAlwaysHidden" />
-
-        <activity android:name="com.leancloud.im.guide.activity.AVSquareMembersActivity" />
         <activity
             android:name="com.leancloud.im.guide.activity.AVSingleChatActivity"
             android:launchMode="singleTop"
