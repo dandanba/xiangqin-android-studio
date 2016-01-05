@@ -143,7 +143,7 @@ public class User extends AVUser {
     public void sayHello(User sender) {
         AVPush push = new AVPush();
         push.setChannel("public");
-        push.setMessage(sender.getUsername() + "向您打招呼了。");
+        push.setMessage(sender.getNickname() + "向您打招呼了。");
         AVQuery<AVInstallation> query = AVInstallation.getQuery();
         query.whereEqualTo("installationId", getInstallationId());
         push.setQuery(query);

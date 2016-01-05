@@ -77,14 +77,11 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
             final User user = User.getCurrentUser(User.class);
             targetUser.sayHello(user);
 
-
             Notification notification = new Notification();
             notification.setMessage("打招呼");
             notification.setUser(user.getUsername());
             notification.setTargetUser(targetUser.getUsername());
             notification.saveInBackground();
-
-
         }
 
         public UserViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
@@ -95,7 +92,7 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
         public void bind(Context context, UserDataHolder datHolder, int position) {
             final User user = datHolder.getUser();
             mIcon.setImageURI(Uri.parse(user.getIconUrl()));
-            mTitleText.setText(user.getUsername());
+            mTitleText.setText(user.getNickname());
             mTextText.setText(String.format("%1$s %2$s", user.getBirthday(), user.getArea()));
             mInfoText.setText(String.format("%1$scm %2$s", user.getHeight(), user.getEarning()));
             mSayHelloButton.setTag(user);
