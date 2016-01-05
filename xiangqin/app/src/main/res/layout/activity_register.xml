@@ -70,45 +70,6 @@
             android:background="#ffacacac" />
 
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal">
-
-        <TextView
-            style="@style/normal_text_shadow_style_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/service_treaty_and_privacy_policy" />
-
-        <TextView
-            android:id="@+id/terms_textview"
-            style="@style/normal_text_shadow_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="@string/terms"
-            android:textColor="@color/term_text_text_color" />
-
-        <TextView
-            style="@style/normal_text_shadow_style_2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/he" />
-
-        <TextView
-            android:id="@+id/privacy_policy_textview"
-            style="@style/normal_text_shadow_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="@string/privacy_policy"
-            android:textColor="@color/term_text_text_color" />
-    </LinearLayout>
-
     <Button
         android:id="@+id/login_button"
         style="@style/white_btn_text_style"

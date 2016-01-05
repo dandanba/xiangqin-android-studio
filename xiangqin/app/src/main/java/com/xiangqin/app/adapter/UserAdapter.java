@@ -28,7 +28,6 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
         mItemClickListener = onItemClickListener;
     }
 
-
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = null;

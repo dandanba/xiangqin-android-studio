@@ -140,7 +140,7 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
 
         public void bind(Context context, UserDataHolder dataHolder, int position) {
             mIcon.setImageURI(Uri.parse(mUser.getIconUrl()));
-            mTitleText.setText(mUser.getUsername());
+            mTitleText.setText(mUser.getNickname());
         }
 
         private void openClient(final User targetUser) {

@@ -1,18 +1,18 @@
 package com.xiangqin.app.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.SignUpCallback;
 import com.xiangqin.app.R;
 import com.xiangqin.app.XQApplication;
 import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
+import com.xiangqin.app.utils.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -49,46 +49,26 @@ public class RegisterActivity extends BaseActivity {
         onBackPressed();
     }
 
-    @OnClick(R.id.terms_textview)
-    public void onTermsButtonClcik(View view) {
-    }
-
-    @OnClick(R.id.privacy_policy_textview)
-    public void onPrivacyButtonClcik(View view) {
-
-    }
-
     @OnClick(R.id.login_button)
     public void onLoginButtonClick(View view) {
         final String phoneNumber = mAccountEdit.getText().toString();
         final String password = mPasswordEdit.getText().toString();
-
-
-        new AsyncTask<String, Void, User>() {
+        mUser.setMobilePhoneNumber(phoneNumber);
+        mUser.setUsername(phoneNumber);
+        mUser.setPassword(password);
+        mUser.signUpInBackground(new SignUpCallback() {
             @Override
-            protected User doInBackground(String... params) {
-                mUser.setMobilePhoneNumber(params[0]);
-                mUser.setUsername(params[0]);
-                mUser.setPassword(params[1]);
-                try {
-                    mUser.signUp();
-                    return mUser;
-                } catch (AVException e) {
-                    Log.e(TAG, "signUp", e);
-                }
-                return null;
-            }
-
-            protected void onPostExecute(User result) {
-                if (result != null) {
+            public void done(AVException e) {
+                if (e == null) {
                     EventBus.getDefault().post(new ActionEvent("account"));
                     startActivity(IntentGenerator.genSimpleActivityIntent(RegisterActivity.this, MainActivity.class));
                     finish();
+                } else {
+                    ToastUtils.showToast(RegisterActivity.this, e.toString());
                 }
             }
+        });
 
-            ;
-        }.execute(phoneNumber, password);
 
     }
 

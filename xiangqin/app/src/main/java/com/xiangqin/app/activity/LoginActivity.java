@@ -1,16 +1,16 @@
 package com.xiangqin.app.activity;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.LogInCallback;
 import com.xiangqin.app.R;
 import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
+import com.xiangqin.app.utils.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -41,28 +41,19 @@ public class LoginActivity extends BaseActivity {
     public void onLoginButtonClick(View view) {
         final String phoneNumber = mAccountEdit.getText().toString();
         final String password = mPasswordEdit.getText().toString();
-        new AsyncTask<String, Void, User>() {
+        User.loginByMobilePhoneNumberInBackground(phoneNumber, password, new LogInCallback<User>() {
             @Override
-            protected User doInBackground(String... params) {
-                try {
-                    return User.loginByMobilePhoneNumber(params[0], params[1], User.class);
-                } catch (AVException e) {
-                    Log.e(TAG, "login", e);
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(User result) {
-                super.onPostExecute(result);
-                if (result != null) {
+            public void done(User user, AVException e) {
+                if (e == null) {
                     EventBus.getDefault().post(new ActionEvent("account"));
-                //    User.putUser(LoginActivity.this, result);
+                    //    User.putUser(LoginActivity.this, result);
                     startActivity(IntentGenerator.genSimpleActivityIntent(LoginActivity.this, MainActivity.class));
                     finish();
+                } else {
+                    ToastUtils.showToast(LoginActivity.this, e.toString());
                 }
             }
-        }.execute(phoneNumber, password);
+        }, User.class);
     }
 
 

@@ -120,7 +120,6 @@ public class MyFragment extends BaseFragment implements OnRecyclerViewItemClickL
 
     @Override
     public void onItemClick(View view, int position) {
-
     }
 
 
@@ -131,7 +130,6 @@ public class MyFragment extends BaseFragment implements OnRecyclerViewItemClickL
         if (event instanceof ActionEvent) {
             ActionEvent actionEvent = (ActionEvent) event;
             if ("header".equals(actionEvent.mAction)) {
-
                 Intent intent = new Intent(mBaseActivity, MultiImageSelectorActivity.class);
                 // whether show camera
                 intent.putExtra(MultiImageSelectorActivity.EXTRA_SHOW_CAMERA, true);
