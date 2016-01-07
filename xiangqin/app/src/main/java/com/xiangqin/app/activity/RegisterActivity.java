@@ -1,6 +1,7 @@
 package com.xiangqin.app.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +14,9 @@ import com.xiangqin.app.XQApplication;
 import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
 import com.xiangqin.app.utils.ToastUtils;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -53,23 +57,43 @@ public class RegisterActivity extends BaseActivity {
     public void onLoginButtonClick(View view) {
         final String phoneNumber = mAccountEdit.getText().toString();
         final String password = mPasswordEdit.getText().toString();
-        mUser.setMobilePhoneNumber(phoneNumber);
-        mUser.setUsername(phoneNumber);
-        mUser.setPassword(password);
-        mUser.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(AVException e) {
-                if (e == null) {
-                    EventBus.getDefault().post(new ActionEvent("account"));
-                    startActivity(IntentGenerator.genSimpleActivityIntent(RegisterActivity.this, MainActivity.class));
-                    finish();
-                } else {
-                    ToastUtils.showToast(RegisterActivity.this, e.toString());
-                }
+
+
+        if (isMobile(phoneNumber)) {
+            if (isPassword(password)) {
+                mUser.setMobilePhoneNumber(phoneNumber);
+                mUser.setUsername(phoneNumber);
+                mUser.setPassword(password);
+
+
+                mUser.signUpInBackground(new SignUpCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e == null) {
+                            EventBus.getDefault().post(new ActionEvent("account"));
+                            startActivity(IntentGenerator.genSimpleActivityIntent(RegisterActivity.this, MainActivity.class));
+                            finish();
+                        } else {
+                            ToastUtils.showToast(RegisterActivity.this, e.toString());
+                        }
+                    }
+                });
+            } else {
+                ToastUtils.showToast(RegisterActivity.this, "密码长度6位或6位以上");
             }
-        });
+        } else {
+            ToastUtils.showToast(RegisterActivity.this, "手机号码格式有误");
+        }
+    }
 
+    private boolean isMobile(String mobiles) {
+        Pattern p = Pattern.compile("^1(3|5|7|8|4)\\d{9}");
+        Matcher m = p.matcher(mobiles);
+        return m.matches();
+    }
 
+    private boolean isPassword(String password) {
+        return !TextUtils.isEmpty(password) && password.length() >= 6;
     }
 
 }
