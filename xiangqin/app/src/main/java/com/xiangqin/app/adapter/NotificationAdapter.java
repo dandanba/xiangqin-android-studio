@@ -102,7 +102,9 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
 
                             Notification notification = new Notification();
                             notification.setMessage("打招呼");
+                            notification.setUserName(user.getNickname());
                             notification.setUser(user.getUsername());
+                            notification.setTargetUserName(targetUser.getNickname());
                             notification.setTargetUser(targetUser.getUsername());
                             notification.saveInBackground();
                         }
@@ -137,7 +139,7 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
 
         public void bind(Context context, NotificationDataHolder datHolder, int position) {
             final Notification notification = datHolder.getNotification();
-            mTitleText.setText(notification.getUser() +
+            mTitleText.setText(notification.getUserName() +
                             (notification.getMessage().equals("打招呼") ? " 向您打了声招呼" :
                                     notification.getMessage().equals("私聊") ? " 想和您私聊" : "")
             );
@@ -155,13 +157,15 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
                     if (filterException(e)) {
                         Notification notification = new Notification();
                         notification.setMessage("私聊");
+                        notification.setUserName(user.getNickname());
                         notification.setUser(user.getUsername());
                         notification.setTargetUser(targetUser.getUsername());
+                        notification.setTargetUserName(targetUser.getNickname());
                         notification.saveInBackground();
 
                         Intent intent = new Intent(mContext, AVSingleChatActivity.class);
                         intent.putExtra(Constants.MEMBER_ID, targetUser.getUsername());
-                        intent.putExtra(Constants.ACTIVITY_TITLE, targetUser.getUsername());
+                        intent.putExtra(Constants.ACTIVITY_TITLE, targetUser.getNickname());
                         mContext.startActivity(intent);
                     }
                 }

@@ -64,8 +64,6 @@ public class RegisterActivity extends BaseActivity {
                 mUser.setMobilePhoneNumber(phoneNumber);
                 mUser.setUsername(phoneNumber);
                 mUser.setPassword(password);
-
-
                 mUser.signUpInBackground(new SignUpCallback() {
                     @Override
                     public void done(AVException e) {

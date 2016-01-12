@@ -79,8 +79,10 @@ public class UserAdapter extends BaseAdapter<UserDataHolder> {
 
             Notification notification = new Notification();
             notification.setMessage("打招呼");
+            notification.setUserName(user.getNickname());
             notification.setUser(user.getUsername());
             notification.setTargetUser(targetUser.getUsername());
+            notification.setTargetUserName(targetUser.getNickname());
             notification.saveInBackground();
         }
 

@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import com.avos.avoscloud.im.v2.AVIMMessage;
 import com.leancloud.im.guide.event.ImTypeMessageResendEvent;
 import com.xiangqin.app.R;
+import com.xiangqin.app.model.User;
 
 import java.text.SimpleDateFormat;
 
@@ -70,7 +71,10 @@ public class RightTextHolder extends AVCommonViewHolder {
         MessageContent content = JSON.parseObject(message.getContent(), MessageContent.class);
         contentView.setText(content.get_lctext());
         timeView.setText(time);
-        nameView.setText(message.getFrom());
+
+
+//        nameView.setText(message.getFrom());
+        nameView.setText(User.getCurrentUser(User.class).getNickname());
 
         if (AVIMMessage.AVIMMessageStatus.AVIMMessageStatusFailed == message.getMessageStatus()) {
             errorView.setVisibility(View.VISIBLE);

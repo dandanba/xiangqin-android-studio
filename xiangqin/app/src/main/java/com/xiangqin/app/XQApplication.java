@@ -7,7 +7,6 @@ import android.os.Vibrator;
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
 import com.avos.avoscloud.im.v2.AVIMMessageManager;
-import com.avos.avoscloud.im.v2.AVIMTypedMessage;
 import com.baidu.location.service.LocationService;
 import com.baidu.location.service.WriteLog;
 import com.baidu.mapapi.SDKInitializer;
@@ -17,7 +16,11 @@ import com.xiangqin.app.message.Messager;
 import com.xiangqin.app.model.Notification;
 import com.xiangqin.app.model.User;
 
+import java.util.HashMap;
+
 public class XQApplication extends Application {
+
+    public final HashMap<String, String> mNumberName = new HashMap< >();
 
     public LocationService locationService;
     public Vibrator mVibrator;

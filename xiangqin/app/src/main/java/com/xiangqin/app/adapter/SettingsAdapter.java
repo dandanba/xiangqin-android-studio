@@ -74,12 +74,12 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> implements 
         itemDataHolder.setText("");
 
         mDatas.add(itemDataHolder);
+//
+//        itemDataHolder = new SettingsDataHolder(0);
+//        itemDataHolder.setTitle("关于");
+//        itemDataHolder.setText("");
 
-        itemDataHolder = new SettingsDataHolder(0);
-        itemDataHolder.setTitle("关于");
-        itemDataHolder.setText("");
-
-        mDatas.add(itemDataHolder);
+//        mDatas.add(itemDataHolder);
 
         itemDataHolder = new SettingsDataHolder(2);
         itemDataHolder.setTitle("退出登录");

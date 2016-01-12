@@ -145,6 +145,7 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
 
         private void openClient(final User targetUser) {
             final User user = User.getCurrentUser(User.class);
+
             AVImClientManager.getInstance().open(user.getUsername(), new AVIMClientCallback() {
                 @Override
                 public void done(AVIMClient avimClient, AVIMException e) {
@@ -152,12 +153,14 @@ public class InfoAdapter extends BaseAdapter<UserDataHolder> {
                         Notification notification = new Notification();
                         notification.setMessage("私聊");
                         notification.setUser(user.getUsername());
+                        notification.setUserName(user.getNickname());
                         notification.setTargetUser(targetUser.getUsername());
+                        notification.setTargetUserName(targetUser.getNickname());
                         notification.saveInBackground();
 
                         Intent intent = new Intent(mContext, AVSingleChatActivity.class);
                         intent.putExtra(Constants.MEMBER_ID, targetUser.getUsername());
-                        intent.putExtra(Constants.ACTIVITY_TITLE, targetUser.getUsername());
+                        intent.putExtra(Constants.ACTIVITY_TITLE, targetUser.getNickname());
                         mContext.startActivity(intent);
                     }
                 }

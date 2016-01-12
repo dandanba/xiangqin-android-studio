@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.avos.avoscloud.feedback.FeedbackAgent;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.xiangqin.app.R;
 import com.xiangqin.app.activity.IntentGenerator;
@@ -41,21 +42,27 @@ public class MyAdapter extends BaseAdapter<MyDataHolder> implements OnRecyclerVi
 
         mDatas.add(new MyDataHolder(1));
 
-        itemDataHolder = new MyDataHolder(0);
-        itemDataHolder.setTitle("新手礼包");
-        itemDataHolder.setText("");
-
-        mDatas.add(itemDataHolder);
 
         itemDataHolder = new MyDataHolder(0);
-        itemDataHolder.setTitle("有奖励未领取");
+        itemDataHolder.setTitle("意见反馈");
         itemDataHolder.setText("");
 
-        mDatas.add(itemDataHolder);
 
-        itemDataHolder = new MyDataHolder(0);
-        itemDataHolder.setTitle("红娘一对一服务");
-        itemDataHolder.setText("");
+//        itemDataHolder = new MyDataHolder(0);
+//        itemDataHolder.setTitle("新手礼包");
+//        itemDataHolder.setText("");
+//
+//        mDatas.add(itemDataHolder);
+//
+//        itemDataHolder = new MyDataHolder(0);
+//        itemDataHolder.setTitle("有奖励未领取");
+//        itemDataHolder.setText("");
+//
+//        mDatas.add(itemDataHolder);
+//
+//        itemDataHolder = new MyDataHolder(0);
+//        itemDataHolder.setTitle("红娘一对一服务");
+//        itemDataHolder.setText("");
 
         mDatas.add(itemDataHolder);
 
@@ -115,6 +122,14 @@ public class MyAdapter extends BaseAdapter<MyDataHolder> implements OnRecyclerVi
 
     @Override
     public void onItemClick(View view, int position) {
+        final String title = mDatas.get(position).getTitle();
+        switch (title) {
+            case "意见反馈":
+                FeedbackAgent agent = new FeedbackAgent(mContext);
+                agent.startDefaultThreadActivity();
+                break;
+
+        }
     }
 
     public class SettingsViewHolder extends BaseViewHolder {

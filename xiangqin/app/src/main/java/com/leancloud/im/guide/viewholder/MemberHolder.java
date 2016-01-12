@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.leancloud.im.guide.Constants;
-import com.xiangqin.app.R;
 import com.leancloud.im.guide.activity.AVSingleChatActivity;
 import com.leancloud.im.guide.adapter.MembersAdapter;
+import com.xiangqin.app.R;
 
 import butterknife.Bind;
 

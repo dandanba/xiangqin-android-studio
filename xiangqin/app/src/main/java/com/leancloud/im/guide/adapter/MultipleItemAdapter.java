@@ -8,6 +8,7 @@ import com.leancloud.im.guide.AVImClientManager;
 import com.leancloud.im.guide.viewholder.AVCommonViewHolder;
 import com.leancloud.im.guide.viewholder.LeftTextHolder;
 import com.leancloud.im.guide.viewholder.RightTextHolder;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -66,7 +67,8 @@ public class MultipleItemAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 
   @Override
   public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-    ((AVCommonViewHolder)holder).bindData(messageList.get(position));
+    final AVIMMessage message = messageList.get(position);
+            ((AVCommonViewHolder) holder).bindData(message);
     if (holder instanceof LeftTextHolder) {
       ((LeftTextHolder)holder).showTimeView(shouldShowTime(position));
     } else if (holder instanceof RightTextHolder) {

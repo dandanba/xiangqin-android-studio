@@ -27,11 +27,11 @@ public class Notification extends AVObject {
     }
 
     public String getTargetUser() {
-        return getString("targetUser");
+        return getString("targetUserName");
     }
 
-    public void setTargetUser(String targetUser) {
-        put("targetUser", targetUser);
+    public void setTargetUser(String targetUserName) {
+        put("targetUserName", targetUserName);
     }
 
     public String getMessage() {
@@ -40,6 +40,24 @@ public class Notification extends AVObject {
 
     public void setMessage(String message) {
         put("message", message);
+    }
+
+
+    // 新加字段 from "6.0.4"
+    public String getUserName() {
+        return getString("userName");
+    }
+
+    public void setUserName(String userName) {
+        put("userName", userName);
+    }
+
+    public String getTargetUserName() {
+        return getString("targetUserName");
+    }
+
+    public void setTargetUserName(String targetUserName) {
+        put("targetUserName", targetUserName);
     }
 
 }
