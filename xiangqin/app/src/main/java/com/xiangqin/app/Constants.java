@@ -9,7 +9,6 @@ public class Constants {
     public static final String AVOS_APP_KEY = "9H9dJnD36gCEG6VppbL09m5j";
 
 
-    public static final String SMS_APP_KEY = "b52b67218b71";
-    public static final String SMS_APP_SECRET = "51248ca84c87a6d414a861c891b8e775";
+    public static final String DEFAULT_USER_HEADER = "http://ac-svu6vore.clouddn.com/fe93c66bca03d5e0.jpg";
 
 }

@@ -7,6 +7,7 @@ import com.avos.avoscloud.AVInstallation;
 import com.avos.avoscloud.AVPush;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.AVUser;
+import com.leancloud.im.guide.Constants;
 
 @AVClassName("User")
 public class User extends AVUser {
@@ -105,7 +106,7 @@ public class User extends AVUser {
             if (1 == getInt("sex")) {
                 return "http://ac-svu6vore.clouddn.com/ffe9afbf04793258.jpg";
             } else {
-                return "http://ac-svu6vore.clouddn.com/fe93c66bca03d5e0.jpg";
+                return com.xiangqin.app.Constants.DEFAULT_USER_HEADER;
             }
         } else {
             return icon;

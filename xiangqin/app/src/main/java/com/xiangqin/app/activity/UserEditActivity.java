@@ -1,5 +1,8 @@
 package com.xiangqin.app.activity;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
@@ -10,7 +13,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
+import com.avos.avoscloud.AVFile;
 import com.avos.avoscloud.SaveCallback;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.xiangqin.app.Constants;
 import com.xiangqin.app.R;
 import com.xiangqin.app.XQApplication;
 import com.xiangqin.app.dialog.DateFragmentDialog;
@@ -18,12 +24,17 @@ import com.xiangqin.app.dialog.EditFragmentDialog;
 import com.xiangqin.app.dialog.SelectFragmentDialog;
 import com.xiangqin.app.event.ActionEvent;
 import com.xiangqin.app.model.User;
+import com.xiangqin.app.utils.FileUtils;
+import com.xiangqin.app.utils.ToastUtils;
 
+import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.nereo.multi_image_selector.MultiImageSelectorActivity;
 
 public class UserEditActivity extends BaseActivity implements View.OnClickListener, EditFragmentDialog.OnEditChangedListener, DateFragmentDialog.OnDateChangedListener, SelectFragmentDialog.OnSelectChangedListener {
     @Bind(R.id.common_title_text)
@@ -34,6 +45,9 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
     LinearLayout mBottomLayout;
     @Bind(R.id.login_button)
     Button mNextButton;
+    @Bind(R.id.icon)
+    SimpleDraweeView mIcon;
+    private static final int REQUEST_IMAGE = 1;
 
     private final static String[] SEX = new String[]{"男", "女"};
     private final static String[] EDUCATION = new String[]{"中专", "高中及以下", "大专", "大学本科", "硕士", "博士"};
@@ -55,10 +69,40 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         mUpdateUser = getIntent().getBooleanExtra("update_user", false);
         mUser = mUpdateUser ? User.getCurrentUser(User.class) : new User();
         ButterKnife.bind(this);
+
+        mIcon.setImageURI(Uri.parse(mUser.getIconUrl()));
         mCommonTitleText.setText(mUpdateUser ? "修改个人信息" : "个人信息");
         mNextButton.setText(mUpdateUser ? "修改" : "注册");
         initItemLayout(mTopLayout, new String[]{"性别:sex", "生日:birthday", "身高:height", "学历:education", "婚姻状况:state"});
         initItemLayout(mBottomLayout, new String[]{"月收入:earning", "昵称:nickname"});
+    }
+
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_IMAGE) {
+            if (resultCode == Activity.RESULT_OK) {
+                // Get the result list of select image paths
+                List<String> path = data.getStringArrayListExtra(MultiImageSelectorActivity.EXTRA_RESULT);
+                // do your logic ....
+                final File file = new File(path.get(0));
+                byte[] bs = FileUtils.readFile(file);
+                mIcon.setImageURI(Uri.parse("file://" + file.getAbsolutePath()));
+                final AVFile avFile = new AVFile(file.getName(), bs);
+                avFile.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(AVException e) {
+                        if (e == null) {
+                            final String fileUrl = avFile.getUrl();
+                            mUser.setIcon(fileUrl);
+                        }
+                    }
+                });
+
+
+            }
+        }
     }
 
     @Override
@@ -69,6 +113,80 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
             if ("account".equals(action.mAction)) {
                 finish();
             }
+        }
+    }
+
+    @OnClick(R.id.icon)
+    public void onIconButtonClick(View v) {
+        final Intent intent = IntentGenerator.showSelector(this, 1);
+        startActivityForResult(intent, REQUEST_IMAGE);
+    }
+
+    @OnClick(R.id.titlebar_left_button)
+    public void onLeftButtonClcik(View view) {
+        onBackPressed();
+    }
+
+    @OnClick(R.id.login_button)
+    public void onLoginButtonClcik(View view) {
+        final String nickname = getText("nickname");
+        final String birthday = getText("birthday");
+        final String sex = getText("sex");
+        final String earning = getText("earning");
+        final String education = getText("education");
+        final String height = getText("height");
+        final String state = getText("state");
+        final User user = mUser;
+
+        if (Constants.DEFAULT_USER_HEADER.equals(mUser.getIcon())) {
+            ToastUtils.showToast(this, "请选择您的头像");
+            return;
+        } else if ("未填写".equals(nickname)) {
+            ToastUtils.showToast(this, "请选择您的昵称");
+            return;
+        } else if ("未填写".equals(birthday)) {
+            ToastUtils.showToast(this, "请选择您的生日");
+            return;
+        } else if ("未填写".equals(height)) {
+            ToastUtils.showToast(this, "请选择您的身高");
+            return;
+        } else if ("未填写".equals(education)) {
+            ToastUtils.showToast(this, "请选择您的学历");
+            return;
+        } else if ("未填写".equals(nickname)) {
+            ToastUtils.showToast(this, "请选择您的昵称");
+            return;
+        } else if ("未填写".equals(state)) {
+            ToastUtils.showToast(this, "请选择您的婚姻状况");
+            return;
+        } else if ("未填写".equals(earning)) {
+            ToastUtils.showToast(this, "请选择您的月收入");
+            return;
+        } else if ("未填写".equals(sex)) {
+            ToastUtils.showToast(this, "请选择您的性别");
+            return;
+        }
+
+        user.setNickname(nickname);
+        user.setBirthday(birthday);
+        user.setSex(sex);
+        user.setEarning(earning);
+        user.setEducation(education);
+        user.setHeight(height);
+        user.setState(state);
+
+        if (mUpdateUser) {
+            mUser.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(AVException e) {
+                    if (e == null) {
+                        finish();
+                    }
+                }
+            });
+        } else {
+            XQApplication.getInstance().getMessager().put("user", user);
+            startActivity(IntentGenerator.genSimpleActivityIntent(this, RegisterActivity.class));
         }
     }
 
@@ -101,45 +219,6 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
 
         titleText.setText(item.title);
         textText.setText(item.text);
-    }
-
-    @OnClick(R.id.titlebar_left_button)
-    public void onLeftButtonClcik(View view) {
-        onBackPressed();
-    }
-
-    @OnClick(R.id.login_button)
-    public void onLoginButtonClcik(View view) {
-        final String nickname = getText("nickname");
-        final String birthday = getText("birthday");
-        final String sex = getText("sex");
-        final String earning = getText("earning");
-        final String education = getText("education");
-        final String height = getText("height");
-        final String state = getText("state");
-        final User user = mUser;
-
-        user.setNickname(nickname);
-        user.setBirthday(birthday);
-        user.setSex(sex);
-        user.setEarning(earning);
-        user.setEducation(education);
-        user.setHeight(height);
-        user.setState(state);
-
-        if (mUpdateUser) {
-            mUser.saveInBackground(new SaveCallback() {
-                @Override
-                public void done(AVException e) {
-                    if (e == null) {
-                        finish();
-                    }
-                }
-            });
-        } else {
-            XQApplication.getInstance().getMessager().put("user", user);
-            startActivity(IntentGenerator.genSimpleActivityIntent(this, RegisterActivity.class));
-        }
     }
 
     private String getTextByUser(String tag) {
