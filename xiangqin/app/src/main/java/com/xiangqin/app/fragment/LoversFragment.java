@@ -55,6 +55,7 @@ public class LoversFragment extends BaseFragment implements OnRecyclerViewItemCl
         mUserQuery = AVQuery.getQuery(User.class);
         mUser = User.getCurrentUser(User.class);
         mUserQuery.whereNotEqualTo("sex", mUser.getSexInt());
+//        mUserQuery.orderByDescending("createdAt");
     }
 
     @Nullable

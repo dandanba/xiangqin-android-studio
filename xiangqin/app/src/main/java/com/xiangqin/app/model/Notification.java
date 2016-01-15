@@ -27,11 +27,11 @@ public class Notification extends AVObject {
     }
 
     public String getTargetUser() {
-        return getString("targetUserName");
+        return getString("targetUser");
     }
 
-    public void setTargetUser(String targetUserName) {
-        put("targetUserName", targetUserName);
+    public void setTargetUser(String targetUser) {
+        put("targetUser", targetUser);
     }
 
     public String getMessage() {
