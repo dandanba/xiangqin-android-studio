@@ -28,4 +28,9 @@
     <string name="login_null_name_tip">请输入用户名</string>
     <string name="unspport_message_type">暂不支持此消息类型</string>
     <string name="message_is_null">消息不能为空</string>
+
+
+    <string name="service_treaty_and_privacy_policy">已阅读</string>
+    <string name="terms">服务条款</string>
+
 </resources>

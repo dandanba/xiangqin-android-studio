@@ -1,5 +1,6 @@
 package com.xiangqin.app.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -46,6 +47,11 @@ public class RegisterActivity extends BaseActivity {
         mLoginButton.setText("注册");
 
         mUser = (User) XQApplication.getInstance().getMessager().get("user");
+    }
+
+    @OnClick(R.id.terms)
+    public void onTermsButtonClcik(View view) {
+        startActivity(new Intent(this, TermsActivity.class));
     }
 
     @OnClick(R.id.titlebar_left_button)

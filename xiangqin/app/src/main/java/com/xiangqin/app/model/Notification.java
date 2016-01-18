@@ -42,7 +42,6 @@ public class Notification extends AVObject {
         put("message", message);
     }
 
-
     // 新加字段 from "6.0.4"
     public String getUserName() {
         return getString("userName");

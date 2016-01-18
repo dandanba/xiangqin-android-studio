@@ -70,6 +70,22 @@
             android:background="#ffacacac" />
 
     </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/terms"
+        style="@style/normal_text_shadow_style"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="22dp"
+        android:layout_marginRight="22dp"
+        android:layout_marginTop="10dp"
+        android:clickable="true"
+        android:gravity="right"
+        android:padding="5dp"
+        android:text="@string/terms"
+        android:textColor="@color/term_text_text_color" />
+
     <Button
         android:id="@+id/login_button"
         style="@style/white_btn_text_style"

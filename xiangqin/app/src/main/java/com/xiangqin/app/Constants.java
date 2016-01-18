@@ -9,6 +9,7 @@ public class Constants {
     public static final String AVOS_APP_KEY = "9H9dJnD36gCEG6VppbL09m5j";
 
 
-    public static final String DEFAULT_USER_HEADER = "http://ac-svu6vore.clouddn.com/fe93c66bca03d5e0.jpg";
+    public static final String DEFAULT_USER_HEADER1 = "http://ac-svu6vore.clouddn.com/fe93c66bca03d5e0.jpg";
+    public static final String DEFAULT_USER_HEADER2 = "http://ac-svu6vore.clouddn.com/ffe9afbf04793258.jpg";
 
 }

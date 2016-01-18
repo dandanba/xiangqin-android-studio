@@ -88,6 +88,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name="com.avos.avoscloud.feedback.ThreadActivity" />
+        <activity
+            android:name=".activity.TermsActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <!-- multi selector -->
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"
@@ -99,6 +103,7 @@
         <meta-data
             android:name="UMENG_CHANNEL"
             android:value="Umeng" />
+
         <activity
             android:name="com.leancloud.im.guide.activity.AVSingleChatActivity"
             android:launchMode="singleTop"

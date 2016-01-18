@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -138,7 +139,7 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         final String state = getText("state");
         final User user = mUser;
 
-        if (Constants.DEFAULT_USER_HEADER.equals(mUser.getIcon())) {
+        if (Constants.DEFAULT_USER_HEADER1.equals(mUser.getIconUrl()) || Constants.DEFAULT_USER_HEADER2.equals(mUser.getIconUrl())) {
             ToastUtils.showToast(this, "请选择您的头像");
             return;
         } else if ("未填写".equals(nickname)) {
@@ -153,7 +154,7 @@ public class UserEditActivity extends BaseActivity implements View.OnClickListen
         } else if ("未填写".equals(education)) {
             ToastUtils.showToast(this, "请选择您的学历");
             return;
-        } else if ("未填写".equals(nickname)) {
+        } else if ("未填写".equals(nickname) || TextUtils.isEmpty(nickname)) {
             ToastUtils.showToast(this, "请选择您的昵称");
             return;
         } else if ("未填写".equals(state)) {
