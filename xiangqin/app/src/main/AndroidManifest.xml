@@ -92,6 +92,10 @@
             android:name=".activity.TermsActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.MessageActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
         <!-- multi selector -->
         <activity
             android:name="me.nereo.multi_image_selector.MultiImageSelectorActivity"

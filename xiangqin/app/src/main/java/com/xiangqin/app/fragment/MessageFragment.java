@@ -13,6 +13,8 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.xiangqin.app.R;
+import com.xiangqin.app.activity.IntentGenerator;
+import com.xiangqin.app.activity.MessageActivity;
 import com.xiangqin.app.adapter.ItemDivider;
 import com.xiangqin.app.adapter.NotificationAdapter;
 import com.xiangqin.app.adapter.NotificationDataHolder;
@@ -79,10 +81,11 @@ public class MessageFragment extends BaseFragment implements OnRecyclerViewItemC
                     ToastUtils.showToast(mBaseActivity, e.toString());
                     return;
                 }
-
+                mAdapter.add(new NotificationDataHolder(1));
                 final List<NotificationDataHolder> datas = new ArrayList<NotificationDataHolder>();
                 final int size = list.size();
                 NotificationDataHolder data;
+
                 for (int i = 0; i < size; i++) {
                     data = new NotificationDataHolder(0);
                     data.setNotification(list.get(i));
@@ -101,5 +104,8 @@ public class MessageFragment extends BaseFragment implements OnRecyclerViewItemC
 
     @Override
     public void onItemClick(View view, int position) {
+        if (position == 0) {
+            startActivity(IntentGenerator.genSimpleActivityIntent(mBaseActivity, MessageActivity.class));
+        }
     }
 }

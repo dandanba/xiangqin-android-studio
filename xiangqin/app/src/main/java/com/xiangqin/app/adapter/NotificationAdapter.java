@@ -19,6 +19,7 @@ import com.leancloud.im.guide.activity.AVSingleChatActivity;
 import com.xiangqin.app.R;
 import com.xiangqin.app.model.Notification;
 import com.xiangqin.app.model.User;
+import com.xiangqin.app.utils.DisplayUtils;
 import com.xiangqin.app.utils.ToastUtils;
 import com.xiangqin.app.widget.RelativeTimeTextView;
 
@@ -51,6 +52,11 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
                 v.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
                 viewHolder = new UserViewHolder(v, mItemClickListener);
                 break;
+            case 1:
+                v = View.inflate(mContext, R.layout.layout_settings_item, null);
+                v.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, DisplayUtils.dpToPxInt(mContext, 60)));
+                viewHolder = new SettingsViewHolder(v, mItemClickListener);
+                break;
             default:
                 break;
         }
@@ -59,15 +65,36 @@ public class NotificationAdapter extends BaseAdapter<NotificationDataHolder> {
 
     @Override
     public void onBindViewHolder(BaseViewHolder holder, int position) {
-        final NotificationDataHolder datHolder = mDatas.get(position);
-        final int itemViewType = datHolder.getType();
+        final NotificationDataHolder dataHolder = mDatas.get(position);
+        final int itemViewType = dataHolder.getType();
         switch (itemViewType) {
             case 0:
                 UserViewHolder userViewHolder = (UserViewHolder) holder;
-                userViewHolder.bind(mContext, datHolder, position);
+                userViewHolder.bind(mContext, dataHolder, position);
+                break;
+            case 1:
+                SettingsViewHolder infoDataHolder = (SettingsViewHolder) holder;
+                infoDataHolder.bind(mContext, dataHolder, position);
                 break;
             default:
                 break;
+        }
+    }
+
+    public class SettingsViewHolder extends BaseViewHolder {
+        @Bind(R.id.title)
+        TextView mTitleText;
+        @Bind(R.id.text)
+        TextView mTextText;
+
+        public SettingsViewHolder(View view, OnRecyclerViewItemClickListener onItemClickListener) {
+            super(view, onItemClickListener);
+            ButterKnife.bind(this, view);
+        }
+
+        public void bind(Context context, NotificationDataHolder dataHolder, int position) {
+            mTitleText.setText("消息");
+            mTextText.setText("安全提示");
         }
     }
 
