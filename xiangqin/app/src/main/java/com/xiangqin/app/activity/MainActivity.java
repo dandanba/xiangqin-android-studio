@@ -3,6 +3,7 @@ package com.xiangqin.app.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.View;
@@ -18,6 +19,9 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.Poi;
 import com.baidu.location.service.LocationService;
+import com.liulishuo.filedownloader.BaseDownloadTask;
+import com.liulishuo.filedownloader.FileDownloadListener;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.xiangqin.app.R;
 import com.xiangqin.app.XQApplication;
 import com.xiangqin.app.event.ActionEvent;
@@ -28,11 +32,13 @@ import com.xiangqin.app.fragment.NearbyFragment;
 import com.xiangqin.app.fragment.SearchFragment;
 import com.xiangqin.app.model.User;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import cn.trinea.android.common.util.PackageUtils;
 import me.tabak.fragmentswitcher.FragmentStateArrayPagerAdapter;
 import me.tabak.fragmentswitcher.FragmentSwitcher;
 
@@ -223,6 +229,52 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startActivity(IntentGenerator.genSimpleActivityIntent(this, SettingsActivity.class));
     }
 
+    @OnClick(R.id.bar_button)
+    public void onBarButtonClick(View view) {
+        final String url = "http://u.7miai.com/download/apps/user/miai_12284.apk";
+        final String path = Environment.getExternalStorageDirectory().getAbsolutePath()
+                + File.separator + url.substring(url.lastIndexOf("/") + 1);
+        FileDownloader.getImpl().create(url)
+                .setPath(path)
+                .setListener(new FileDownloadListener() {
+                    @Override
+                    protected void pending(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                    }
+
+                    @Override
+                    protected void connected(BaseDownloadTask task, String etag, boolean isContinue, int soFarBytes, int totalBytes) {
+                    }
+
+                    @Override
+                    protected void progress(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                    }
+
+                    @Override
+                    protected void blockComplete(BaseDownloadTask task) {
+                    }
+
+                    @Override
+                    protected void retry(final BaseDownloadTask task, final Throwable ex, final int retryingTimes, final int soFarBytes) {
+                    }
+
+                    @Override
+                    protected void completed(BaseDownloadTask task) {
+                        PackageUtils.install(MainActivity.this, path);
+                    }
+
+                    @Override
+                    protected void paused(BaseDownloadTask task, int soFarBytes, int totalBytes) {
+                    }
+
+                    @Override
+                    protected void error(BaseDownloadTask task, Throwable e) {
+                    }
+
+                    @Override
+                    protected void warn(BaseDownloadTask task) {
+                    }
+                }).start();
+    }
 
     private void initPush() {
         // 设置默认打开的 Activity
@@ -337,5 +389,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
     }
+
 
 }

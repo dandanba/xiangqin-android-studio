@@ -1,8 +1,9 @@
 package com.xiangqin.app;
 
-import android.app.Application;
 import android.app.Service;
 import android.os.Vibrator;
+import android.support.multidex.MultiDex;
+import android.support.multidex.MultiDexApplication;
 
 import com.avos.avoscloud.AVOSCloud;
 import com.avos.avoscloud.AVObject;
@@ -12,13 +13,14 @@ import com.baidu.location.service.WriteLog;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.leancloud.im.guide.MessageHandler;
+import com.liulishuo.filedownloader.FileDownloader;
 import com.xiangqin.app.message.Messager;
 import com.xiangqin.app.model.Notification;
 import com.xiangqin.app.model.User;
 
 import java.util.HashMap;
 
-public class XQApplication extends Application {
+public class XQApplication extends MultiDexApplication {
 
     public final HashMap<String, String> mNumberName = new HashMap< >();
 
@@ -35,6 +37,7 @@ public class XQApplication extends Application {
 
     @Override
     public void onCreate() {
+        MultiDex.install(getApplicationContext());
         super.onCreate();
 
         locationService = new LocationService(getApplicationContext());
@@ -56,6 +59,9 @@ public class XQApplication extends Application {
         // 必须在启动的时候注册 MessageHandler
         // 应用一启动就会重连，服务器会推送离线消息过来，需要 MessageHandler 来处理
         AVIMMessageManager.registerDefaultMessageHandler(new MessageHandler(this));
+
+        // Just cache Application's Context.
+        FileDownloader.init(this);
 
         sInstance = this;
 

@@ -90,7 +90,6 @@ public class SettingsAdapter extends BaseAdapter<SettingsDataHolder> implements 
         mItemClickListener = this;
     }
 
-
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = null;

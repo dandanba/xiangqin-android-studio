@@ -8,6 +8,13 @@
         android:id="@+id/titlebar_layout"
         layout="@layout/layout_titlebar" />
 
+    <ImageView
+        android:id="@+id/bar_button"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/make_love" />
+
     <me.tabak.fragmentswitcher.FragmentSwitcher
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
