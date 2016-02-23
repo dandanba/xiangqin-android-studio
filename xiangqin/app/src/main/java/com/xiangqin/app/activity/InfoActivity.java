@@ -1,12 +1,18 @@
 package com.xiangqin.app.activity;
 
 import android.os.Bundle;
+import android.widget.LinearLayout;
 
 import com.xiangqin.app.R;
 import com.xiangqin.app.fragment.UserFragment;
 
+import ofs.ahd.dii.br.AdSize;
+import ofs.ahd.dii.br.AdView;
+
 public class InfoActivity extends BaseActivity {
 
+
+    private static final String TAG = InfoActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,6 +21,18 @@ public class InfoActivity extends BaseActivity {
         // 没有接收数据，数据由Fragment处理
         //final User user = (User) XQApplication.getInstance().getMessager().get("user");
         replace(R.id.content_frame, UserFragment.newInstance());
+
+        setupBannerAd();
     }
 
+
+    /**
+     * 设置广告条广告
+     */
+    private void setupBannerAd() {
+        //　实例化广告条
+        AdView adView = new AdView(this, AdSize.FIT_SCREEN);
+        LinearLayout bannerLayout = (LinearLayout) findViewById(R.id.ll_banner);
+        bannerLayout.addView(adView);
+    }
 }

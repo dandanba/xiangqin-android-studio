@@ -1,6 +1,7 @@
 package com.xiangqin.app.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,14 +14,13 @@ import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVQuery;
 import com.avos.avoscloud.FindCallback;
 import com.xiangqin.app.R;
-import com.xiangqin.app.XQApplication;
-import com.xiangqin.app.activity.InfoActivity;
 import com.xiangqin.app.activity.IntentGenerator;
+import com.xiangqin.app.activity.WebActivity;
+import com.xiangqin.app.adapter.EventAdapter;
+import com.xiangqin.app.adapter.EventDataHolder;
 import com.xiangqin.app.adapter.ItemDivider;
 import com.xiangqin.app.adapter.OnRecyclerViewItemClickListener;
-import com.xiangqin.app.adapter.UserAdapter;
-import com.xiangqin.app.adapter.UserDataHolder;
-import com.xiangqin.app.model.User;
+import com.xiangqin.app.model.Event;
 import com.xiangqin.app.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -35,7 +35,8 @@ import butterknife.ButterKnife;
 public class SearchFragment extends BaseFragment implements OnRecyclerViewItemClickListener {
     @Bind(R.id.recycler_view)
     RecyclerView mRecyclerView;
-    AVQuery<User> mUserQuery;
+    AVQuery<Event> mEventQuery;
+    private String mTag = "广州";
 
     public static SearchFragment newInstance() {
         SearchFragment fragment = new SearchFragment();
@@ -44,16 +45,14 @@ public class SearchFragment extends BaseFragment implements OnRecyclerViewItemCl
         return fragment;
     }
 
-    UserAdapter mAdapter;
-    User mUser;
+    EventAdapter mAdapter;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        mAdapter = new UserAdapter(context, this);
-        mUserQuery = AVQuery.getQuery(User.class);
-        mUser =  User.getCurrentUser(User.class);
-        mUserQuery.whereNotEqualTo("sex", mUser.getSexInt());
+        mAdapter = new EventAdapter(context, this);
+        mEventQuery = AVQuery.getQuery(Event.class);
+        mEventQuery.whereEqualTo("areaTag", mTag);
     }
 
     @Nullable
@@ -74,20 +73,20 @@ public class SearchFragment extends BaseFragment implements OnRecyclerViewItemCl
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRecyclerView.setAdapter(mAdapter);
-        mUserQuery.findInBackground(new FindCallback<User>() {
+        mEventQuery.findInBackground(new FindCallback<Event>() {
             @Override
-            public void done(List<User> list, AVException e) {
+            public void done(List<Event> list, AVException e) {
                 if (e != null) {
                     ToastUtils.showToast(mBaseActivity, e.toString());
                     return;
                 }
 
-                final List<UserDataHolder> datas = new ArrayList<UserDataHolder>();
+                final List<EventDataHolder> datas = new ArrayList<EventDataHolder>();
                 final int size = list.size();
-                UserDataHolder data;
+                EventDataHolder data;
                 for (int i = 0; i < size; i++) {
-                    data = new UserDataHolder(0);
-                    data.setUser(list.get(i));
+                    data = new EventDataHolder(0);
+                    data.setEvent(list.get(i));
                     datas.add(data);
                 }
                 mAdapter.addAll(datas);
@@ -103,9 +102,10 @@ public class SearchFragment extends BaseFragment implements OnRecyclerViewItemCl
 
     @Override
     public void onItemClick(View view, int position) {
-        final UserDataHolder data = mAdapter.mDatas.get(position);
-        final User user = data.getUser();
-        XQApplication.getInstance().getMessager().put("user", user);
-        startActivity(IntentGenerator.genSimpleActivityIntent(mBaseActivity, InfoActivity.class));
+        final EventDataHolder data = mAdapter.mDatas.get(position);
+        final Event user = data.getEvent();
+        final Intent intent = IntentGenerator.genSimpleActivityIntent(mBaseActivity, WebActivity.class);
+        intent.putExtra("url", user.getUrl());
+        startActivity(intent);
     }
 }

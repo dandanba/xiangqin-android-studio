@@ -362,7 +362,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                     break;
                 case R.id.tab_2:
                     mRightButton.setVisibility(View.INVISIBLE);
-                    mCommonTitleText.setText("搜索");
+                    mCommonTitleText.setText("活动");
                     button.setCompoundDrawablesWithIntrinsicBounds(0, R.drawable.tab_icon_2_foucsed, 0, 0);
                     mFragmentSwitcher.setCurrentItem(1);
                     break;

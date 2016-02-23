@@ -15,6 +15,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.leancloud.im.guide.MessageHandler;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.xiangqin.app.message.Messager;
+import com.xiangqin.app.model.Event;
 import com.xiangqin.app.model.Notification;
 import com.xiangqin.app.model.User;
 
@@ -47,6 +48,7 @@ public class XQApplication extends MultiDexApplication {
 
         Fresco.initialize(this);
 
+        AVObject.registerSubclass(Event.class);
         AVObject.registerSubclass(Notification.class);
         AVObject.registerSubclass(User.class);
         AVOSCloud.initialize(this, Constants.AVOS_APP_ID, Constants.AVOS_APP_KEY);
