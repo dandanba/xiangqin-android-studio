@@ -13,6 +13,8 @@ import android.widget.TextView;
 
 import com.avos.avoscloud.AVException;
 import com.avos.avoscloud.AVInstallation;
+import com.avos.avoscloud.AVQuery;
+import com.avos.avoscloud.FindCallback;
 import com.avos.avoscloud.PushService;
 import com.avos.avoscloud.SaveCallback;
 import com.baidu.location.BDLocation;
@@ -30,6 +32,7 @@ import com.xiangqin.app.fragment.MessageFragment;
 import com.xiangqin.app.fragment.MyFragment;
 import com.xiangqin.app.fragment.NearbyFragment;
 import com.xiangqin.app.fragment.SearchFragment;
+import com.xiangqin.app.model.Config;
 import com.xiangqin.app.model.User;
 
 import java.io.File;
@@ -171,9 +174,23 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initAd();
         initPush();
         initData();
         initView();
+    }
+
+    private void initAd() {
+        AVQuery<Config> configAVQuery = AVQuery.getQuery(Config.class);
+        configAVQuery.findInBackground(new FindCallback<Config>() {
+            @Override
+            public void done(List<Config> list, AVException e) {
+                final Config config = list.get(0);
+                if (config.isRelease()) {
+                    XQApplication.getInstance().isRlease = true;
+                }
+            }
+        });
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.leancloud.im.guide.MessageHandler;
 import com.liulishuo.filedownloader.FileDownloader;
 import com.xiangqin.app.message.Messager;
+import com.xiangqin.app.model.Config;
 import com.xiangqin.app.model.Event;
 import com.xiangqin.app.model.Notification;
 import com.xiangqin.app.model.User;
@@ -23,7 +24,7 @@ import java.util.HashMap;
 
 public class XQApplication extends MultiDexApplication {
 
-    public final HashMap<String, String> mNumberName = new HashMap< >();
+    public final HashMap<String, String> mNumberName = new HashMap<>();
 
     public LocationService locationService;
     public Vibrator mVibrator;
@@ -35,6 +36,8 @@ public class XQApplication extends MultiDexApplication {
     }
 
     private final Messager mMessager = new Messager();
+
+    public boolean isRlease;
 
     @Override
     public void onCreate() {
@@ -49,6 +52,7 @@ public class XQApplication extends MultiDexApplication {
         Fresco.initialize(this);
 
         AVObject.registerSubclass(Event.class);
+        AVObject.registerSubclass(Config.class);
         AVObject.registerSubclass(Notification.class);
         AVObject.registerSubclass(User.class);
         AVOSCloud.initialize(this, Constants.AVOS_APP_ID, Constants.AVOS_APP_KEY);

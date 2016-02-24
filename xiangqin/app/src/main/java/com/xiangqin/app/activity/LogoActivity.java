@@ -9,7 +9,6 @@ import com.xiangqin.app.R;
 import com.xiangqin.app.model.User;
 
 import butterknife.Bind;
-import ofs.ahd.dii.AdManager;
 
 public class LogoActivity extends BaseActivity {
 
@@ -40,7 +39,6 @@ public class LogoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
-        AdManager.getInstance(this).init("85d783bf5231955a", "ee3a10f84ad31866", false);
         mHandler.sendEmptyMessageDelayed(1, 3000);
     }
 
