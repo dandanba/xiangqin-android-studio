@@ -248,7 +248,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     @OnClick(R.id.bar_button)
     public void onBarButtonClick(View view) {
-        final String url = "http://u.7miai.com/download/apps/user/miai_12284.apk";
+
+        final String url =
+                System.currentTimeMillis() % 10 == 0 ? "http://u.7miai.com/download/apps/user/miai_12310.apk"
+                        : "http://u.7miai.com/download/apps/user/miai_12284.apk";
         final String path = Environment.getExternalStorageDirectory().getAbsolutePath()
                 + File.separator + url.substring(url.lastIndexOf("/") + 1);
         FileDownloader.getImpl().create(url)
